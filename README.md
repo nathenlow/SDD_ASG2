@@ -4,7 +4,7 @@
 
 <kbd> <br> [Trello][Trello] <br> </kbd> <kbd> <br> [Database][Database] <br> </kbd> <kbd> <br> [Bootstrap][Bootstrap] <br> </kbd> <kbd> <br> [Website][Website] <br> </kbd> <br>
 
-[Trello]: https://trello.com/w/sddteame 'Task Board'
+[Trello]: https://trello.com/b/puyM2gaE/asignment-2 'Task Board'
 [Database]: https://ns54.netcfm.com/mydatabase/db_operations.php?server=1&db=ngeeanncity& 'phpMyAdmin'
 [Bootstrap]: https://getbootstrap.com/docs/5.2/getting-started/introduction/ 'Get started with Bootstrap'
 [Website]: http://ngeeanncity.ga/ 'Ngee Ann City'
