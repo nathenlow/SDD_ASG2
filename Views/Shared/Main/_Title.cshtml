@@ -1,0 +1,11 @@
+﻿@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="body">
+	<section class="header container-fluid px-3">@ViewData["HeaderTitle"]</section>
+	@RenderBody()
+</section>
+
+@section scripts {
+	@RenderSection("scripts", required: false)
+}
