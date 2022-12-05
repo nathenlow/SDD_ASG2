@@ -1,0 +1,23 @@
+﻿body {
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('../../images/background_main_menu.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.097);
+}
+.nk-main{
+    background-color: transparent !important;
+}
+.main-menu {
+    margin: 0.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menu-header {
+    width: 50%;
+    height: 20%;
+    max-width: 500px;
+}
