@@ -13,6 +13,7 @@
 .main-menu {
     margin: 0.4rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -21,3 +22,25 @@
     height: 20%;
     max-width: 500px;
 }
+
+/*------------------------------------------------- CSS for buttons --------------------------------------------------*/
+.btn-container {
+    margin-top: 2.5rem;
+    padding: 0.6rem;
+    border-radius: 8px;
+    background-color: limegreen;
+    color:white;
+    transition-duration: 0.4s;
+}
+.btn-container a{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+    color:inherit;
+}
+
+.btn-container:hover{
+    background-color: green;
+    cursor: pointer;
+}
+
