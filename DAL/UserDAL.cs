@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using SDD_ASG2.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -20,14 +21,14 @@ namespace SDD_ASG2.DAL
             conn = new MySqlConnection(strConn);
         }
 
-        //get every supplier
-        public User getUser()
+        //get user through email
+        public User getUser(string email)
         {
 
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM user", conn);
+            MySqlCommand cmd = new MySqlCommand($"SELECT * FROM user u WHERE u.email = '{email}';", conn);
 
             //open and execute cmd
-            conn.OpenAsync();
+            conn.Open();
             MySqlDataReader reader = cmd.ExecuteReader();
 
             //read
@@ -37,11 +38,11 @@ namespace SDD_ASG2.DAL
                 {
                     User user = new User
                     {
-                        Id = reader.GetInt32(0),
+                        UserId = reader.GetInt32(0),
                         Email = reader.GetString(1),
                         Password = reader.GetString(2),
                         Username = reader.GetString(3),
-                        SavedGameData = !reader.IsDBNull(4) ? reader.GetString(4) : (string?)null
+                        SavedGameData = reader.GetString(4)
                     };
                     conn.Close();
                     return user;
@@ -52,4 +53,5 @@ namespace SDD_ASG2.DAL
         }
 
     }
+
 }
