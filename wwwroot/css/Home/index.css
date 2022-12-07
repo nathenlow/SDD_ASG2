@@ -1,4 +1,11 @@
-﻿body {
+﻿
+/*------------------------------------------------- CSS for navbar --------------------------------------------------*/
+.nk-navbar-custom{
+    background-color: transparent !important;
+}
+
+/*------------------------------------------------- CSS for main --------------------------------------------------*/
+body {
     width: 100%;
     min-height: 100vh;
     background-image: url('../../images/background_main_menu.jpg');
@@ -6,6 +13,9 @@
     background-position: center;
     position: relative;
     background-color: rgba(0, 0, 0, 0.097);
+}
+body::-webkit-scrollbar{
+    display:none;
 }
 .nk-main{
     background-color: transparent !important;
@@ -20,6 +30,7 @@
 .menu-header {
     width: 50%;
     height: 20%;
+    min-width:250px;
     max-width: 500px;
 }
 
