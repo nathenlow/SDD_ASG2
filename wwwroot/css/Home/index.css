@@ -2,6 +2,7 @@
 /*------------------------------------------------- CSS for navbar --------------------------------------------------*/
 .nk-navbar-custom{
     background-color: transparent !important;
+    padding: 20px 0px;
 }
 
 /*------------------------------------------------- CSS for main --------------------------------------------------*/
@@ -37,11 +38,9 @@ body::-webkit-scrollbar{
 /*------------------------------------------------- CSS for buttons --------------------------------------------------*/
 .btn-container {
     margin-top: 2.5rem;
-    padding: 0.6rem;
+    padding: 0.3rem;
     border-radius: 8px;
-    background-color: limegreen;
-    color:white;
-    transition-duration: 0.4s;
+    color: white;
 }
 .btn-container a{
     text-decoration: none;
@@ -50,8 +49,29 @@ body::-webkit-scrollbar{
     color:inherit;
 }
 
-.btn-container:hover{
+.start-btn {
+    background-color: limegreen;
+    transition-duration: 0.4s;
+}
+.start-btn:hover{
     background-color: green;
     cursor: pointer;
 }
 
+.leaderboard-btn {
+    background-color: gold;
+    transition-duration: 0.4s;
+}
+.leaderboard-btn:hover {
+    background-color: darkgoldenrod;
+    cursor: pointer;
+}
+
+.exit-btn {
+    background-color: red;
+    transition-duration: 0.4s;
+}
+.exit-btn:hover {
+    background-color: darkred;
+    cursor: pointer;
+}
