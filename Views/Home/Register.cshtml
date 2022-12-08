@@ -1,7 +1,43 @@
-﻿
+﻿@model SDD_ASG2.Models.User
+
 @{
     ViewData["Title"] = "Register";
+    ViewData["Css"] = "Home/login.css";
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
 }
 
-<h1>Register</h1>
+@using Microsoft.AspNetCore.Http
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Login Form Example</title>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+
+<body>
+    <div class="login-form">
+        <form asp-action="Registered">
+            <h1>Register</h1>
+            <div class="content">
+                <div class="input-field">
+                    <input asp-for="Username" type="text" placeholder="Username" autocomplete="nope" name="username">
+                </div>
+
+                <div class="input-field">
+                    <input asp-for="Email" type="text" name="email" placeholder="Email Address" autocomplete="nope">
+                </div>
+                <div class="input-field">
+                    <input asp-for="Password" type="password" name="password" placeholder="Password" autocomplete="new-password">
+                </div>
+            </div>
+            <div class="action">
+                <button>Register</button>
+
+            </div>
+        </form>
+    </div>
+</body>
+</html>

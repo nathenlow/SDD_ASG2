@@ -1,7 +1,36 @@
 ﻿
 @{
     ViewData["Title"] = "Login";
+    ViewData["css"] = "Home/login.css";
 }
 
-<h1>Login</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Login Form Example</title>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
+</head>
+<body>
+    <div class="login-form">
+        <form asp-controller="Home" asp-action="Login" method="post">
+            <h1>Login</h1>
+            <div class="content">
+                <div class="input-field">
+                    <input type="text" placeholder="Username" autocomplete="nope" name="username">
+                </div>
+                <div class="input-field">
+                    <input type="password" placeholder="Password" autocomplete="new-password" name="password">
+                </div>
+                <p style="color:red">@TempData["ErrorMsg"]</p>
+            </div>
+            <div class="action">
+                <button type="submit">Sign in</button>
+                <button asp-controller="Home" asp-action="Register">Register</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
 
