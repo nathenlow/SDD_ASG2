@@ -1,17 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SDD_ASG2.DAL;
 using SDD_ASG2.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Razor.Language.Intermediate;
+using MySql.Data.MySqlClient;
 
 namespace SDD_ASG2.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private UserDAL userContext = new UserDAL();
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -20,6 +24,7 @@ namespace SDD_ASG2.Controllers
 
         public IActionResult Index()
         {
+            User user = userContext.getUser("n@l.com");
             return View();
         }
 
