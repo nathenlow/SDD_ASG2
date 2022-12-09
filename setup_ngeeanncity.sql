@@ -19,7 +19,7 @@ ENGINE = INNODB;
 
 
 DROP TABLE IF EXISTS highscores;
-CREATE OR REPLACE TABLE highscores (
+CREATE TABLE highscores (
   id int(11) NOT NULL AUTO_INCREMENT,
   score int(11) NOT NULL,
   userid int(11) NOT NULL,
