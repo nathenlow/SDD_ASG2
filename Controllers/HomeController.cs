@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using MySql.Data.MySqlClient;
+using Microsoft.AspNetCore.Http;
 
 namespace SDD_ASG2.Controllers
 {
@@ -61,6 +62,8 @@ namespace SDD_ASG2.Controllers
         {
             return View();
         }
+
+       
 
     }
 }
