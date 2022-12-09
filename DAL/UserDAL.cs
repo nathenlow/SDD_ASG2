@@ -58,16 +58,14 @@ namespace SDD_ASG2.DAL
             MySqlCommand cmd = conn.CreateCommand();
             //Specify an INSERT SQL statement which will
             //return the auto-generated StaffID after insertion
-            cmd.CommandText = @"INSERT INTO user (userid, email, password, username, savedgamedata)
-                                VALUES(@userid, @email, @password, @username, @savedgamedata)";
+            cmd.CommandText = @"INSERT INTO user (email, password, username)
+                                VALUES(@email, @password, @username)";
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
 
             cmd.Parameters.AddWithValue("@username", user.Username);
             cmd.Parameters.AddWithValue("@password", user.Password);
             cmd.Parameters.AddWithValue("@email", user.Email);
-            cmd.Parameters.AddWithValue("@userid", 6);
-            cmd.Parameters.AddWithValue("@savedgamedata", "");
 
             //A connection to database must be opened before any operations made.
             conn.Open();
