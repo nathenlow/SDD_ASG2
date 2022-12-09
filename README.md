@@ -32,6 +32,29 @@
 
 </details>
 
+## Configure MySQL LocalDB
+<details>
+<summary>More info</summary>
+
+> Credentials are found in Whatsapp group description
+
+1. Download [XAMPP][XAMPP]
+2. Run XAMPP as administrator
+3. Click on the check box for Apache and MySQL an start them
+4. Edit Database
+    - Click on Admin in MySQL to edit database
+    - Download [DataGrip][DataGrip] (JetBrain offer free education license to student | [Register Here][JetBrain Register])
+    - Download this crack app [dbForge Studio for MySQL][dbForge Studio for MySQL]
+
+### Configure Database IDE
+
+[XAMPP]: https://www.apachefriends.org/download.html 'Download'
+[DataGrip]: https://www.jetbrains.com/datagrip/ 'Download'
+[JetBrain Register]: https://www.jetbrains.com/community/education/#students 'Register'
+[dbForge Studio for MySQL]: https://qwldr-my.sharepoint.com/:f:/g/personal/cheaposoftware_qwldr_onmicrosoft_com/EkR6n4Znn61Ilo2y_Wy2TtoBnWCfKLvXN_o_6JBYsa8vKw?e=rFr6df
+</details>
+
+
 ## Layouts
 
 <details>
