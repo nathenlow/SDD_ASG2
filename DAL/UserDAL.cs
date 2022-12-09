@@ -72,8 +72,7 @@ namespace SDD_ASG2.DAL
             //A connection to database must be opened before any operations made.
             conn.Open();
 
-            //SqlDataReader reader = cmd.ExecuteReader();
-            //reader.Close();
+            cmd.ExecuteReader();
             //A connection should be closed after operations.
             conn.Close();
         }
