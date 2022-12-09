@@ -42,8 +42,20 @@ namespace SDD_ASG2.Controllers
 
         public ActionResult Register()
         {
-            return View();
+            User user = new User();
+            return View(user);
         }
+
+        // POST: Register
+        [HttpPost]
+        public ActionResult Registered(User user)
+        {
+            //Add staff record to database
+            userContext.Register(user);
+            //Redirect user to Customer/Index view
+            return RedirectToAction("Login");
+        }
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 
         public ActionResult Login()
         {

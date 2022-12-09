@@ -52,6 +52,32 @@ namespace SDD_ASG2.DAL
             return null;
         }
 
+         public void Register(User user)
+        {
+            //Create a SqlCommand object from connection object
+            MySqlCommand cmd = conn.CreateCommand();
+            //Specify an INSERT SQL statement which will
+            //return the auto-generated StaffID after insertion
+            cmd.CommandText = @"INSERT INTO user (userid, email, password, username, savedgamedata)
+                                VALUES(@userid, @email, @password, @username, @savedgamedata)";
+            //Define the parameters used in SQL statement, value for each parameter
+            //is retrieved from respective class's property.
+
+            cmd.Parameters.AddWithValue("@username", user.Username);
+            cmd.Parameters.AddWithValue("@password", user.Password);
+            cmd.Parameters.AddWithValue("@email", user.Email);
+            cmd.Parameters.AddWithValue("@userid", 6);
+            cmd.Parameters.AddWithValue("@savedgamedata", "");
+
+            //A connection to database must be opened before any operations made.
+            conn.Open();
+
+            //SqlDataReader reader = cmd.ExecuteReader();
+            //reader.Close();
+            //A connection should be closed after operations.
+            conn.Close();
+        }
+
     }
 
 }
