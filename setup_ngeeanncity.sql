@@ -1,10 +1,11 @@
-﻿CREATE DATABASE IF NOT EXISTS ngeeanncity;
+﻿DROP DATABASE IF EXISTS ngeeanncity;
+CREATE DATABASE IF NOT EXISTS ngeeanncity;
 USE ngeeanncity;
 
 /*--------------------------------------
               CREATE TABLE
 --------------------------------------*/
-DROP TABLE IF EXISTS user;
+
 CREATE TABLE user (
   userid int(11) NOT NULL AUTO_INCREMENT,
   email varchar(320) NOT NULL,
@@ -18,8 +19,7 @@ CREATE TABLE user (
 ENGINE = INNODB;
 
 
-DROP TABLE IF EXISTS highscores;
-CREATE TABLE highscores (
+CREATE TABLE scores (
   id int(11) NOT NULL AUTO_INCREMENT,
   score int(11) NOT NULL,
   userid int(11) NOT NULL,
@@ -29,6 +29,19 @@ CREATE TABLE highscores (
 )
 ENGINE = INNODB;
 
+/*--------------------------------------
+              CREATE VIEW
+--------------------------------------*/
+
+-- View top 10 highscore
+CREATE VIEW highscore
+  AS 
+    SELECT u.username, s.score
+    FROM  scores s 
+    INNER JOIN user u ON s.userid = u.userid 
+    ORDER BY s.score DESC, s.timestamp ASC 
+    LIMIT 0,10
+;
 
 
 
@@ -45,7 +58,7 @@ INSERT INTO user (email, password, username) VALUES
 ('z@y.com', 'Qwer1234', 'zhiyan');
 
 -- Dumping data for highscore
-INSERT INTO highscores (score, userid) VALUES
+INSERT INTO scores (score, userid) VALUES
 (15, 1),
 (13, 2),
 (2, 3),
