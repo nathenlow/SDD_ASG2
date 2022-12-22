@@ -4,25 +4,52 @@
     ViewData["bodyid"] = "home";
 }
 
+@if (TempData["UserNotLoggedIn"] != null)
+{
+    <div class="modal fade pulse animated" id="err-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>@TempData["UserNotLoggedIn"]</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a role="button" class="btn btn-primary" href="~/Home/Login">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#err-modal').modal('show');
+        });
+    </script>
+    }
+}
+
 <div class="main-menu">
+    
     <!-- Header of main menu -->
     <img class="menu-header pulse animated infinite" src="~/images/Title_main_menu.png" />
-    
+
     <!-- Buttons -->
     <div class="btn-container">
-        <a href="#" class="btn btn-animate">Start New Game</a>
+        <a href="~/Game/Index/new" class="btn btn-blue btn-animate">Start New Game</a>
     </div>
 
     <div class="btn-container start-btn">
-        <a href="#" class="btn btn-animate">Load Game</a>
+        <a href="~/Game/Index/resume" class="btn btn-blue btn-animate">Load Game</a>
     </div>
 
     <div class="btn-container">
-        <a href="#" class="btn btn-animate">Leaderboard</a>
+        <a href="~/Game/Leaderboard" class="btn btn-blue btn-animate">Leaderboard</a>
     </div>
-
-    <div class="btn-container">
-        <a href="#" class="btn btn-animate">Exit</a>
-    </div>
-
 </div>
+
+

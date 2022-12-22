@@ -45,21 +45,23 @@ namespace SDD_ASG2.Controllers
         // POST: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(UserRegister user)
+        public ActionResult Register(UserRegister newUser)
         {
             if (ModelState.IsValid)
             {
-                userContext.Register(user);
-                HttpContext.Session.SetString("Email", user.Email);
+                userContext.Register(newUser);
+                int userid = userContext.GetUserId(newUser.Email);
+                HttpContext.Session.SetInt32("UserId", userid);
                 HttpContext.Session.SetString("Role", "User");
                 return RedirectToAction("Index", "Home");
             }
             else
             {
                 //Input validation fails, return to the Register view to display error message
-                return View(user);
+                return View(newUser);
             }
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 
         public ActionResult Login()
@@ -83,7 +85,8 @@ namespace SDD_ASG2.Controllers
             string password = formData["password"].ToString();
             if (userContext.CheckPassword(email, password))
             {
-                HttpContext.Session.SetString("Email", email);
+                int userid = userContext.GetUserId(email);
+                HttpContext.Session.SetInt32("UserId", userid);
                 HttpContext.Session.SetString("Role", "User");
                 return RedirectToAction("Index", "Home");
             }

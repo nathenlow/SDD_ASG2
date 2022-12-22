@@ -1,32 +1,4 @@
-﻿
-
-/* CSS for navbar */
-.nk-navbar-custom {
-    background-color: transparent !important;
-    padding: 20px 0px;
-}
-
-/* CSS for main */
-body {
-    width: 100%;
-    min-height: 100vh;
-    background-image: url('../images/background_main_menu.jpg');
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    background-color: rgba(0, 0, 0, 0.097);
-}
-
-body::-webkit-scrollbar {
-    display: none;
-}
-
-.nk-main {
-    background-color: transparent !important;
-}
-
-
-/*HOME START*/
+﻿/*HOME START*/
 
 #home .main-menu {
     margin: 0.4rem;
@@ -34,13 +6,6 @@ body::-webkit-scrollbar {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-#home .menu-header {
-    width: 50%;
-    height: 20%;
-    min-width: 250px;
-    max-width: 500px;
 }
 
 /* CSS for buttons */
@@ -58,21 +23,21 @@ body::-webkit-scrollbar {
     color: inherit;
 }
 
-#home .btn {
+#home .btn-blue {
     background-color:royalblue;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
-#home .btn:hover {
-    background-color:darkblue;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    cursor:pointer;
-}
+    #home .btn-blue:hover {
+        background-color: darkblue;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+    }
 
-#home .btn:hover::after {
-    transform: scaleX(1.4) scaleY(1.6);
-    opacity: 0;
-}
+        #home .btn-blue:hover::after {
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
+        }
 
 #home .btn-animated {
     animation: moveInBottom 5s ease-out;

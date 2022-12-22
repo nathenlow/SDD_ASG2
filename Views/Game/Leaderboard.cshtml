@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SDD_ASG2.Models.Scores>
+
+@{
+    ViewData["Title"] = "Leaderboard";
+}
+
+<section class="container">
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class=" d-flex justify-content-center align-items-center text-primary m-0 fw-bold">Leaderboard</p>
+        </div>
+        <div class="card-body">
+            <div id="dataTable" class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
+                <table id="dataTable" class="table my-0">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Username</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            Int16 count = 0;
+                            foreach (var item in Model)
+                            {
+                                count++;
+
+                                <tr>
+                                    <td>@count</td>
+                                    <td><img class="rounded-circle me-2" width="30" height="30" src="/images/Title_main_menu.png" />@item.Username</td>
+                                    <td>@item.Score</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

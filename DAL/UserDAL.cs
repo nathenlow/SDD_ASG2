@@ -22,11 +22,33 @@ namespace SDD_ASG2.DAL
             conn = new MySqlConnection(strConn);
         }
 
-        //get user through email
-        public User getUser(string email)
+        //get savedgamedata through userid
+        public string GetGameData(int userid)
         {
 
-            MySqlCommand cmd = new MySqlCommand($"SELECT * FROM user u WHERE u.email = '{email}';", conn);
+            MySqlCommand cmd = new MySqlCommand($"SELECT u.savedgamedata FROM user u WHERE u.userid = '{userid}';", conn);
+
+            //open and execute cmd
+            conn.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            //read
+            if (reader.HasRows)
+            {
+                reader.Read();
+                string savedGameData = reader.GetString(0);
+                conn.Close();
+                return savedGameData;
+            }
+            conn.Close();
+            return "{}";
+        }
+
+        //get user through userid
+        public User GetUser(int userid)
+        {
+
+            MySqlCommand cmd = new MySqlCommand($"SELECT * FROM user u WHERE u.userid = '{userid}';", conn);
 
             //open and execute cmd
             conn.Open();
@@ -41,7 +63,6 @@ namespace SDD_ASG2.DAL
                     {
                         UserId = reader.GetInt32(0),
                         Email = reader.GetString(1),
-                        Password = reader.GetString(2),
                         Username = reader.GetString(3),
                         SavedGameData = reader.GetString(4)
                     };
@@ -51,6 +72,28 @@ namespace SDD_ASG2.DAL
             }
             conn.Close();
             return null;
+        }
+
+        //get userid through email
+        public int GetUserId(string email)
+        {
+
+            MySqlCommand cmd = new MySqlCommand($"SELECT u.userid FROM user u WHERE u.email = '{email}';", conn);
+
+            //open and execute cmd
+            conn.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            //read
+            if (reader.HasRows)
+            {
+                reader.Read();
+                int userid = reader.GetInt32(0);
+                conn.Close();
+                return userid;
+            }
+            conn.Close();
+            return 0;
         }
 
         public void Register(UserRegister user)
@@ -73,7 +116,7 @@ namespace SDD_ASG2.DAL
             conn.Close();
         }
 
-        public bool IsEmailExist(string email, Int32 userid =0)
+        public bool IsEmailExist(string email, int userid =0)
         {
             bool emailFound = false;
             //to get a user record with the email to be validated
@@ -102,7 +145,7 @@ namespace SDD_ASG2.DAL
             return emailFound;
         }
 
-        public bool IsUsernameExist(string username, Int32 userid = 0)
+        public bool IsUsernameExist(string username, int userid = 0)
         {
             bool usernameFound = false;
             //to get a user record with the username to be validated

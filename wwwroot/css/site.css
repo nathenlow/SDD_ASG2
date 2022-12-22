@@ -1,1 +1,24 @@
-﻿
+﻿/* CSS for navbar */
+.nk-navbar-custom {
+    background-color: transparent !important;
+    padding: 20px 0px;
+}
+
+/* CSS for main */
+body {
+    width: 100vw;
+    min-height: 100vh;
+    background-image: url('../images/background_main_menu.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.097);
+}
+
+.menu-header {
+    width: 50%;
+    height: 20%;
+    min-width: 250px;
+    max-width: 500px;
+}
