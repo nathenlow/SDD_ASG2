@@ -45,7 +45,7 @@ body::-webkit-scrollbar {
 
 /* CSS for buttons */
 #home .btn-container {
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     padding: 0.3rem;
     border-radius: 8px;
     color: white;
@@ -58,34 +58,37 @@ body::-webkit-scrollbar {
     color: inherit;
 }
 
-#home .start-btn {
-    background-color: limegreen;
-    transition-duration: 0.4s;
+#home .btn {
+    background-color:royalblue;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+#home .btn:hover {
+    background-color:darkblue;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    cursor:pointer;
 }
 
-#home .start-btn:hover {
-    background-color: green;
-    cursor: pointer;
+#home .btn:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
 }
 
-#home .leaderboard-btn {
-    background-color: gold;
-    transition-duration: 0.4s;
+#home .btn-animated {
+    animation: moveInBottom 5s ease-out;
+    animation-fill-mode: backwards;
 }
 
-#home .leaderboard-btn:hover {
-    background-color: darkgoldenrod;
-    cursor: pointer;
-}
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
 
-#home .exit-btn {
-    background-color: red;
-    transition-duration: 0.4s;
-}
-
-#home .exit-btn:hover {
-    background-color: darkred;
-    cursor: pointer;
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }
 /*HOME END*/
 
