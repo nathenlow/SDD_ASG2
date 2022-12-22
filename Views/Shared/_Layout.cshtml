@@ -15,14 +15,17 @@
     <link rel="manifest" href="~/images/icon/site.webmanifest">
 
     <!-- START: Styles -->
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="~/lib/fontawesome/css/font-awesome.min.css">
     <!-- Piroll -->
     <link rel="stylesheet" href="~/lib/piroll/css/piroll.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Animation CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/lib/fontawesome/css/font-awesome.min.css">
     <!-- fonts -->
     <link rel="stylesheet" href="https://use.typekit.net/pea8jkz.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <!-- Custom css -->
     <link rel="stylesheet" href="~/css/site.css">
     @if (@ViewData["css"] != null)
@@ -84,10 +87,10 @@
                                         switch (role)
                                         {
                                             case "User":
-                                                @await Html.PartialAsync("Navbar/_HomeNav.cshtml")
+                                                @await Html.PartialAsync("Navbar/_UserNav.cshtml")
                                                 break;
                                             default:
-                                                    @await Html.PartialAsync("Navbar/_HomeNav.cshtml")
+                                                @await Html.PartialAsync("Navbar/_HomeNav.cshtml")
                                                 break;
                                         }
                                     }
@@ -121,7 +124,7 @@
     <script src="~/lib/gsap/src/minified/TweenMax.min.js"></script>
     <script src="~/lib/gsap/src/minified/plugins/ScrollToPlugin.min.js"></script>
     <!-- Bootstrap -->
-    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Jquery -->
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
     <!-- Piroll -->

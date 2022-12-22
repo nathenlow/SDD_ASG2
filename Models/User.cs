@@ -16,7 +16,6 @@ namespace SDD_ASG2.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-
         [Display(Name = "Username")]
         public string Username { get; set; }
 

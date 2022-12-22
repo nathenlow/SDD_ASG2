@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Http;
+using SDD_ASG2.ViewModels;
 
 namespace SDD_ASG2.Controllers
 {
@@ -25,9 +26,75 @@ namespace SDD_ASG2.Controllers
 
         public IActionResult Index()
         {
-            User user = userContext.getUser("n@l.com");
             return View();
         }
+
+
+        public ActionResult Register()
+        {
+            string role = HttpContext.Session.GetString("Role");
+            switch (role)
+            {
+                case "User":
+                    return RedirectToAction("Index", "Home");
+                default:
+                    return View();
+            }
+        }
+
+        // POST: Register
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(UserRegister user)
+        {
+            if (ModelState.IsValid)
+            {
+                userContext.Register(user);
+                HttpContext.Session.SetString("Email", user.Email);
+                HttpContext.Session.SetString("Role", "User");
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                //Input validation fails, return to the Register view to display error message
+                return View(user);
+            }
+        }
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
+        public ActionResult Login()
+        {
+            string role = HttpContext.Session.GetString("Role");
+            switch (role)
+            {
+                case "User":
+                    return RedirectToAction("Index", "Home");
+                default:
+                    return View();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Login(IFormCollection formData)
+        {
+            // LoginID converted to lowercase
+
+            string email = formData["email"].ToString();
+            string password = formData["password"].ToString();
+            if (userContext.CheckPassword(email, password))
+            {
+                HttpContext.Session.SetString("Email", email);
+                HttpContext.Session.SetString("Role", "User");
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                // Store an error message in TempData for display at the login page
+                TempData["ErrorMsg"] = "Invalid Login Credentials!";
+                return View();
+            }
+        }
+
 
         public IActionResult Privacy()
         {
@@ -39,31 +106,6 @@ namespace SDD_ASG2.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
-        public ActionResult Register()
-        {
-            User user = new User();
-            return View(user);
-        }
-
-        // POST: Register
-        [HttpPost]
-        public ActionResult Registered(User user)
-        {
-            //Add staff record to database
-            userContext.Register(user);
-            //Redirect user to Customer/Index view
-            return RedirectToAction("Login");
-        }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-       
 
     }
 }

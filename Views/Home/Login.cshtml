@@ -1,36 +1,46 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Login";
-    ViewData["css"] = "Home/login.css";
+    ViewData["css"] = "home.css";
+    ViewData["bodyid"] = "login";
+
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Simple Login Form Example</title>
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
-</head>
-<body>
-    <div class="login-form">
-        <form asp-controller="Home" asp-action="Login" method="post">
-            <h1>Login</h1>
-            <div class="content">
-                <div class="input-field">
-                    <input type="text" placeholder="Username" autocomplete="nope" name="username">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-12 col-xl-10">
+            <div class="card shadow-lg o-hidden border-0 my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-flex">
+                            <div class="flex-grow-1 bg-login-image" style="background-image: url('/images/Title_main_menu.png');"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h4 class="text-dark mb-4">Welcome Back!</h4>
+                                </div>
+                                <form class="user" asp-action="Login">
+                                    <div class="mb-3"><input class="form-control form-control-user" type="email" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="email" /></div>
+                                    <div class="mb-3"><input class="form-control form-control-user" type="password" placeholder="Password" name="password" /></div>
+
+                                    @if (@TempData["ErrorMsg"] != null)
+                                    {
+                                        <p class="mb-3" style="color: red">@TempData["ErrorMsg"]</p>
+                                    }
+
+                                    <button class="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
+                                    <hr />
+                                    <a class="btn btn-primary d-block btn-google btn-user w-100 mb-2" role="button"><i class="fa fa-google"></i>&nbsp; Register with Google</a>
+                                    <a class="btn btn-primary d-block btn-facebook btn-user w-100" role="button"><i class="fa fa-facebook-f"></i>  Login with Facebook</a>
+                                    <hr />
+                                </form>
+                                <div class="text-center"><a class="small" href="~/Home/ForgetPassword">Forgot Password?</a></div>
+                                <div class="text-center"><a class="small" href="~/Home/Register">Create an Account!</a></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-field">
-                    <input type="password" placeholder="Password" autocomplete="new-password" name="password">
-                </div>
-                <p style="color:red">@TempData["ErrorMsg"]</p>
             </div>
-            <div class="action">
-                <button type="submit">Sign in</button>
-                <button asp-controller="Home" asp-action="Register">Register</button>
-            </div>
-        </form>
+        </div>
     </div>
-</body>
-</html>
-
-
+</div>
