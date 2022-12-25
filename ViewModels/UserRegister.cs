@@ -13,6 +13,8 @@ namespace SDD_ASG2.ViewModels
     {
         private string username;
         private string email;
+        private string password;
+        private string retypePassword;
 
         [Required]
         [ValidateUsernameExists]
@@ -20,7 +22,7 @@ namespace SDD_ASG2.ViewModels
         public string Username
         {
             get { return username; }
-            set { username = value.ToLower(); }
+            set { username = value.Trim().ToLower(); }
         }
 
         [Required]
@@ -30,16 +32,25 @@ namespace SDD_ASG2.ViewModels
         public string Email
         {
             get { return email; }
-            set { email = value.ToLower(); }
+            set { email = value.Trim().ToLower(); }
         }
 
         [Required]
-        [StringLength(128, ErrorMessage = "Email address have exceeded the 128 character limit")]
-        public string Password { get; set; }
+        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z/\\d]{8,}$", ErrorMessage = "Password must have minimum eight characters, at least one uppercase letter, one lowercase letter and one number")]
+        [StringLength(128, ErrorMessage = "Password have exceeded the 128 character limit")]
+        public string Password
+        {
+            get { return password; }
+            set { password = value.Trim(); }
+        }
 
         [Required]
         [ValidatePassword]
-        public string RetypePassword { get; set; }
+        public string RetypePassword
+        {
+            get { return retypePassword;}
+            set { retypePassword = value.Trim(); }
+        }
 
     }
     public class ValidateEmailExists : ValidationAttribute
