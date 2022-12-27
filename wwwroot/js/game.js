@@ -72,18 +72,15 @@
             let cellid = ev.target.id;
             let position = parseInt(cellid.replace(cellname, ""));
 
-            
-            //show loading screen
-
-            //define variables
-            //let redoturn = false
-
             console.log(choice);
             console.log(position);
+
+            //show loading screen
             
             // define variables
             let redoturn = false;
-                    // check if position is suitable
+
+            // check if position is suitable
             if (checkPos(position)){
                 // update gamedata (add building to layout, add usedCoin)
 
@@ -98,7 +95,6 @@
                 gamedata["turn"]++;
                 fillBoard();
                 createChoices();
-                // below will cause problem to drag and drop 
                 displayChoices();
             }
         });
@@ -148,7 +144,7 @@
         document.querySelector(".floating-container").innerHTML = "";
         for (let i=0; i <  gamedata["choices"].length; i++){
             let choiceid = choicename + (i + 1);
-            document.querySelector(".floating-container").innerHTML += `<div class="float-element mb-3 pulse animated infinite ${gamedata["choices"][i]}" id="${choiceid}" draggable="true">${gamedata["choices"][i]}</div>`;
+            document.querySelector(".floating-container").innerHTML += `<div class="float-element mb-3 pulse animated infinite ${gamedata["choices"][i]}" id="${choiceid}" draggable="true"></div>`;
         }
         createOnDrag();
     }
@@ -174,8 +170,7 @@
     function createOnDrag(){
         var choicecontainer = document.querySelectorAll(".floating-container .float-element");
         for (var choice of choicecontainer) {
-            choice.addEventListener('dragstart', function (ev) {     
-                console.log(ev.target.id)     
+            choice.addEventListener('dragstart', function (ev) {    
                 ev.dataTransfer.setData("choiceid", ev.target.id);    
             });
         }        

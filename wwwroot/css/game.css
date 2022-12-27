@@ -3,7 +3,6 @@
     width: 5%;
     padding-top: 5%; /* 1:1 Aspect Ratio */
     position: relative;
-    background-size: cover;
 }
 
 #game .floating-container {
@@ -18,9 +17,7 @@
 #game .floating-container .float-element {
     width: 65px;
     height: 65px;
-    background-color: royalblue;
     bottom: 0;
-    border-radius: 50%;
     left: 0;
     right: 0;
     margin: auto;
@@ -30,6 +27,41 @@
     font-size: 23px;
     z-index: 100;
     cursor: grab;
+}
+
+#game .Residential {
+    background-image: url(../images/Building/Residential.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+#game .Industry {
+    background-image: url(../images/Building/Industry.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+#game .Commercial {
+    background-image: url(../images/Building/Commercial.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+#game .Park {
+    background-image: url(../images/Building/Park.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+#game .Road {
+    background-image: url(../images/Building/Road.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 /*END of Game Index*/
