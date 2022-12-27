@@ -81,9 +81,9 @@ namespace SDD_ASG2.Controllers
         {
             // LoginID converted to lowercase
 
-            string email = formData["email"].ToString();
-            string password = formData["password"].ToString();
-            if (userContext.CheckPassword(email, password))
+            string email = formData["email"].ToString().Trim().ToLower();
+            string password = formData["password"].ToString().Trim();
+            if (password.Length >= 8 && userContext.CheckPassword(email, password))
             {
                 int userid = userContext.GetUserId(email);
                 HttpContext.Session.SetInt32("UserId", userid);
