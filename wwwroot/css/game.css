@@ -3,6 +3,7 @@
     width: 5%;
     padding-top: 5%; /* 1:1 Aspect Ratio */
     position: relative;
+    background-size: cover;
 }
 
 #game .floating-container {
