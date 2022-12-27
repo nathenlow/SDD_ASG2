@@ -22,7 +22,13 @@ namespace SDD_ASG2.ViewModels
         public string Username
         {
             get { return username; }
-            set { username = value.Trim().ToLower(); }
+            set
+            {
+                if (value != null)
+                {
+                    username = value.Trim().ToLower();
+                }
+            }
         }
 
         [Required]
@@ -32,7 +38,12 @@ namespace SDD_ASG2.ViewModels
         public string Email
         {
             get { return email; }
-            set { email = value.Trim().ToLower(); }
+            set {
+                if (value != null)
+                {
+                    email = value.Trim().ToLower();
+                }
+            }
         }
 
         [Required]
@@ -41,7 +52,13 @@ namespace SDD_ASG2.ViewModels
         public string Password
         {
             get { return password; }
-            set { password = value.Trim(); }
+            set
+            {
+                if (value != null)
+                {
+                    password = value.Trim();
+                }
+            }
         }
 
         [Required]
@@ -49,7 +66,12 @@ namespace SDD_ASG2.ViewModels
         public string RetypePassword
         {
             get { return retypePassword;}
-            set { retypePassword = value.Trim(); }
+            set {
+                if (value != null)
+                {
+                    retypePassword = value.Trim();
+                }
+            }
         }
 
     }

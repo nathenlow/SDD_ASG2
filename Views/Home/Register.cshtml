@@ -19,12 +19,14 @@
                         </div>
                         <form asp-action="Register" class="user">
                             <div class="form-group">
-                                <div class="mb-3"><input asp-for="Username" class="form-control form-control-user" placeholder="Username" /></div>
+                                <input asp-for="Username" class="form-control form-control-user" placeholder="Username" />
                                 <span asp-validation-for="Username" class="text-danger"></span>
+                                <div class="mb-3"></div>
                             </div>
                             <div class="form-group">
-                                <div class="mb-3"><input asp-for="Email" class="form-control form-control-user" placeholder="Email Address" type="email" /></div>
+                                <input asp-for="Email" class="form-control form-control-user" placeholder="Email Address" type="email" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
+                                <div class="mb-3"></div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-6 mb-3 mb-sm-0"><input asp-for="Password" class="form-control form-control-user" type="password" placeholder="Password"/></div>
