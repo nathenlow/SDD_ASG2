@@ -7,6 +7,47 @@
 @section scripts {
     <script type="text/javascript" src="~/js/game.js"></script>
 }
+    <!--Game Instruction Modal Start-->
+    <div class="modal fade pulse animated" id="instruction-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Game Instructions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>How to play:</h5>
+                    <p>Select one of the two buildings randomly given at the bottom right of the screen, and build them on the 20 x 20 board (drag and drop).
+                        The first building can be built or placed anywhere on the board; however, future buildings can only be built or placed next to other buildings.</p>
+                    <br />
+                    <h5>Goal:</h5>
+                    <p>Build the happiest and most prosperous city possible, by scoring the most points.</p>
+                    <br />
+                    <h5>Point System:</h5>
+                    <p>
+                        •	Residential (<span><img src="/images/Building/Residential.png" /></span>): If it is next to an industry, then it scores 1 point only. Otherwise, it scores 1 point for each adjacent residential or commercial, and 2 points for each adjacent park.
+                        <br />
+                        <br />
+                        •	Industry (<span><img src="/images/Building/Industry.png" /></span>): Scores 1 point per industry in the city. Each industry generates 1 coin per residential building adjacent to it.
+                        <br />
+                        <br />
+                        •	Commercial (<span><img src="/images/Building/Commercial.png" /></span>): Scores 1 point per commercial adjacent to it. Each commercial generates 1 coin per residential adjacent to it.
+                        <br />
+                        <br />
+                        •	Park (<span><img src="/images/Building/Park.png" /></span>): Scores 1 point per park adjacent to it.
+                        <br/>
+                        <br />
+                        •	Road (<span><img src="/images/Building/Road.png" /></span>): Scores 1 point per connected road in the same row.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Game Instruction Modal End-->
+
 
     <!--Game Board Start-->
     <section class="container">
@@ -22,7 +63,15 @@
             </div>
         </div>
         <!--Floating button Start-->
-        <div class="floating-container"></div>
+    <div class="floating-container-main floating-container">
+            <!-- Game instruction button/icon -->
+            <h6>Help</h6>
+            <a class="game-instructions"><i class="fa fa-regular fa-info-circle fa-2x"></i></a>
+            <!-- Building options -->
+            <h6>Buildings</h6>
+            <div class="floating-container building-option"></div>
+        </div>
         <!--Floating button End-->
     </section>
     <!--Game Board End-->
+

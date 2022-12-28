@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+    // Display game instructions
+    displayGameInstructions();
+
     // Define variables
     // length & breadth of game board
     const boardColumns = 20;
@@ -122,6 +125,13 @@
 
     }
 
+
+    //--------------Game Instructions--------------//
+    $(".game-instructions").click(function (e) {
+        e.preventDefault();
+        displayGameInstructions();
+    })
+    
     //--------------FUNCTIONS--------------//
 
     // fill board with buildings
@@ -161,10 +171,10 @@
     }
 
     function displayChoices() {
-        document.querySelector(".floating-container").innerHTML = "";
+        document.querySelector(".floating-container .building-option").innerHTML = "";
         for (let i = 0; i < gamedata["choices"].length; i++) {
             let choiceid = choicename + i;
-            document.querySelector(".floating-container").innerHTML += `<div class="float-element mb-3 pulse animated infinite ${gamedata["choices"][i]}" id="${choiceid}" draggable="true"></div>`;
+            document.querySelector(".floating-container .building-option").innerHTML += `<div class="float-element mb-3 pulse animated infinite ${gamedata["choices"][i]}" id="${choiceid}" draggable="true"></div>`;
         }
         createOnDrag();
     }
@@ -196,7 +206,7 @@
     }
 
     function createOnDrag() {
-        var choicecontainer = document.querySelectorAll(".floating-container .float-element");
+        var choicecontainer = document.querySelectorAll(".floating-container .building-option .float-element");
         for (var choice of choicecontainer) {
             choice.addEventListener('dragstart', function (ev) {
                 ev.dataTransfer.setData("choiceid", ev.target.id);
@@ -209,5 +219,9 @@
             document.getElementById(id).style.backgroundColor = "";
     }
 
+    // display game instruction modal
+    function displayGameInstructions() {
+        $("#instruction-modal").modal("show");
+    }
 
 })
