@@ -112,6 +112,12 @@
             if (gamedata["turn"] >= totalcells && coinsAvail() <= 0) {
                 // save score ==> send data to controller finish() (append to score, remove saved game data)
                 //show how many points he have and his position
+
+                /*let formData = new FormData();
+                formData.append("data", score);
+                let request = new XMLHttpRequest();
+                request.open("POST", "/Game/Finish");
+                request.send(formData);*/
             }
 
             if (redoturn == false) {

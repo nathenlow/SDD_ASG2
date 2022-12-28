@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using SDD_ASG2.ViewModels;
+using Org.BouncyCastle.Utilities.Collections;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace SDD_ASG2.DAL
 {
@@ -51,7 +53,20 @@ namespace SDD_ASG2.DAL
             return scoreList;
         }
 
-        //continue
+        // Insert game score into scores table
+        public void InsertScore(int userid, int score)
+        {
+
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"INSERT scores(score, userid) VALUES(@score, @userid);";
+            cmd.Parameters.AddWithValue("@score", score);
+            cmd.Parameters.AddWithValue("@userid", userid);
+            
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
 
     }
 

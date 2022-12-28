@@ -61,6 +61,14 @@ namespace SDD_ASG2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        public ActionResult Finish(IFormCollection collection)
+        {
+            int userid = (int)HttpContext.Session.GetInt32("UserId");
+            scoreContext.InsertScore(userid, int.Parse(collection["data"]));
+            return RedirectToAction("Index", "Home");
+        }
+
         public ActionResult Leaderboard()
         {
             List<Scores> scores = scoreContext.GetHighscores();
