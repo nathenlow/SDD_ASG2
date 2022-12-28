@@ -34,14 +34,14 @@
     }
 
     // Create Board
-    for (let i = 1; i <= boardRows; i++) {
+    for (let i = 0; i < boardRows; i++) {
         // Create row
         let rowid = rowname + i;
         document.querySelector("#game .table tbody").innerHTML += `<tr id="${rowid}"></tr>`;
 
         // Create cells for that row
-        for (let f = 1; f <= boardColumns; f++) {
-            let cellid = cellname + (((i - 1) * boardColumns) + f);
+        for (let f = 0; f < boardColumns; f++) {
+            let cellid = cellname + ((i * boardColumns) + f);
             document.querySelector(`#game .table tbody tr#${rowid}`).innerHTML += `<td id="${cellid}"></td>`;
         }
     }
@@ -66,7 +66,7 @@
             // get choice
             let data = ev.dataTransfer.getData("choiceid");
             data = data.replace(choicename, "");
-            let choice = gamedata["choices"][parseInt(data) - 1];
+            let choice = gamedata["choices"][parseInt(data)];
             if (choice == undefined) {
                 alert("You are only allowed to drag items from the bottom right");
                 throw Error;
@@ -114,7 +114,7 @@
     function fillBoard() {
         for (let i = 0; i < (totalcells); i++) {
             if (building.includes(gamedata["layout"][i])) {
-                let cellid = cellname + (i + 1);
+                let cellid = cellname + i;
                 var element = document.querySelector(`#game .table tbody td#${cellid}`);
                 // add class if havent added
                 if (!element.classList.contains(gamedata["layout"][i])) {
@@ -149,7 +149,7 @@
     function displayChoices() {
         document.querySelector(".floating-container").innerHTML = "";
         for (let i = 0; i < gamedata["choices"].length; i++) {
-            let choiceid = choicename + (i + 1);
+            let choiceid = choicename + i;
             document.querySelector(".floating-container").innerHTML += `<div class="float-element mb-3 pulse animated infinite ${gamedata["choices"][i]}" id="${choiceid}" draggable="true"></div>`;
         }
         createOnDrag();
