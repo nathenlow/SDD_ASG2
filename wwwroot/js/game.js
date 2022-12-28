@@ -55,6 +55,12 @@
         // ondragover
         cell.addEventListener('dragover', function (ev) {
             ev.preventDefault();
+            HighlightArea(ev.target.id, true);
+        });
+
+        // dragleave
+        cell.addEventListener('dragleave', function (ev) {
+            HighlightArea(ev.target.id, false);
         });
 
         // ondrop
@@ -63,17 +69,22 @@
         ---------------------------------------*/
         cell.addEventListener('drop', function (ev) {
             ev.preventDefault();
+
+            // get cell id
+            let cellid = ev.target.id;
+            HighlightArea(cellid, false)
+
             // get choice
             let data = ev.dataTransfer.getData("choiceid");
             data = data.replace(choicename, "");
             let choice = gamedata["choices"][parseInt(data)];
+
             if (choice == undefined) {
                 alert("You are only allowed to drag items from the bottom right");
                 throw Error;
             }
 
-            // get cell
-            let cellid = ev.target.id;
+            // get cell position
             let position = parseInt(cellid.replace(cellname, ""));
 
             console.log(choice);
@@ -185,6 +196,11 @@
                 ev.dataTransfer.setData("choiceid", ev.target.id);
             });
         }
+    }
+
+    function HighlightArea(id, isTrue) {
+        isTrue == true ? document.getElementById(id).style.backgroundColor = "dodgerblue" :
+            document.getElementById(id).style.backgroundColor = "";
     }
 
 
