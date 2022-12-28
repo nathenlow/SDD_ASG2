@@ -44,6 +44,27 @@ namespace SDD_ASG2.DAL
             return "{}";
         }
 
+
+        // update savedgamedata through userid
+        public void SaveGameData(int userid, string savedgamedata)
+        {
+            //Create a SqlCommand object from connection object
+            MySqlCommand cmd = conn.CreateCommand();
+            //Specify an INSERT SQL statement which will
+            //return the auto-generated StaffID after insertion
+            cmd.CommandText = @"UPDATE user SET savedgamedata = @savedgamedata WHERE userid = @userid;";
+
+
+            cmd.Parameters.AddWithValue("@savedgamedata", savedgamedata);
+            cmd.Parameters.AddWithValue("@userid", userid);
+
+            //A connection to database must be opened before any operations made.
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            //A connection should be closed after operations.
+            conn.Close();
+        }
+
         //get user through userid
         public User GetUser(int userid)
         {

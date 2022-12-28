@@ -10,11 +10,12 @@
     const rowname = "row";
     const choicename = "choice";
 
-    // Get JSONArray in string and convert it
+    // Get JSON obj from html
     var gamedatastr = document.querySelector("#game span#gamedata").innerHTML;
-    var gamedata = JSON.parse(gamedatastr);
-    // Init gamedata JSON array if empty
-    if (!$.isArray(gamedata) || !gamedata.length) {
+    var gamedata = {};
+
+    // Init gamedata JSON object if empty
+    if (gamedatastr == "{}") {
 
         // Create Json array
         gamedata = {
@@ -31,6 +32,8 @@
         }
 
         createChoices();
+    } else {
+        gamedata = JSON.parse(gamedatastr);
     }
 
     // Create Board
@@ -168,7 +171,7 @@
 
     // check if the position the user chose is acceptable
     function checkPos(pos) {
-        if (gamedata["turn"] == 0) {
+        if (gamedata["turn"] == 1) {
             return true;
         }
         else {
@@ -185,8 +188,11 @@
 
     // create form and post data
     function saveData() {
-        // save score ==> send data to controller savedata()
-
+        let formData = new FormData();
+        formData.append("data", JSON.stringify(gamedata));
+        let request = new XMLHttpRequest();
+        request.open("POST", "/Game/SaveData");
+        request.send(formData);
     }
 
     function createOnDrag() {
