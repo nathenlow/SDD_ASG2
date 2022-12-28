@@ -168,10 +168,10 @@
     }
 
     function displayChoices() {
-        document.querySelector(".floating-container").innerHTML = "";
+        document.querySelector(".floating-container .building-option").innerHTML = "";
         for (let i = 0; i < gamedata["choices"].length; i++) {
             let choiceid = choicename + i;
-            document.querySelector(".floating-container").innerHTML += `<div class="float-element mb-3 pulse animated infinite ${gamedata["choices"][i]}" id="${choiceid}" draggable="true"></div>`;
+            document.querySelector(".floating-container .building-option").innerHTML += `<div class="float-element mb-3 pulse animated infinite ${gamedata["choices"][i]}" id="${choiceid}" draggable="true"></div>`;
         }
         createOnDrag();
     }
@@ -200,7 +200,7 @@
     }
 
     function createOnDrag() {
-        var choicecontainer = document.querySelectorAll(".floating-container .float-element");
+        var choicecontainer = document.querySelectorAll(".floating-container .building-option .float-element");
         for (var choice of choicecontainer) {
             choice.addEventListener('dragstart', function (ev) {
                 ev.dataTransfer.setData("choiceid", ev.target.id);
