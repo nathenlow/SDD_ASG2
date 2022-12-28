@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    //--------------Prompt user before leaving page--------------//
+    window.onbeforeunload = function () {
+        return 'Are you sure you want to leave?';
+    };
+
     // Display game instructions
     displayGameInstructions();
 
@@ -132,12 +137,21 @@
     }
 
 
-    //--------------Game Instructions--------------//
-    $(".game-instructions").click(function (e) {
+    //--------------on click functions--------------//
+    //Game Instructions
+    $(".game-instructions").click(function(e) {
         e.preventDefault();
         displayGameInstructions();
-    })
-    
+    });
+
+    //Save game
+    $("#savegame").click(function (e) {
+        e.preventDefault();
+        saveData();
+        document.querySelector(".nk-icon-close").click();
+
+    });
+
     //--------------FUNCTIONS--------------//
 
     // fill board with buildings
