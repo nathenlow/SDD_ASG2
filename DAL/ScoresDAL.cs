@@ -68,6 +68,32 @@ namespace SDD_ASG2.DAL
         }
 
 
+        // Get user highest score by id
+        public int GetUserHighscore(int userid)
+        {
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"Select * From scores WHERE userid = @userid;";
+            cmd.Parameters.AddWithValue("@userid", userid);
+            int highscore = 0;
+
+            conn.Open();
+            MySqlDataReader reader =cmd.ExecuteReader();
+
+            //read
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    if(reader.GetInt32(1) > highscore) {
+                        highscore= reader.GetInt32(1);
+                    }
+
+                }
+            }
+            conn.Close();
+            return highscore;
+        }
+
     }
 
 }

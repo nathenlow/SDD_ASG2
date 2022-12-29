@@ -27,17 +27,17 @@
     background-color:royalblue;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
-    #home .btn-blue:hover {
-        background-color: darkblue;
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-    }
+#home .btn-blue:hover {
+    background-color: darkblue;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
 
-        #home .btn-blue:hover::after {
-            transform: scaleX(1.4) scaleY(1.6);
-            opacity: 0;
-        }
+#home .btn-blue:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+}
 
 #home .btn-animated {
     animation: moveInBottom 5s ease-out;

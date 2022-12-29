@@ -82,7 +82,9 @@ namespace SDD_ASG2.Controllers
             {
                 int userid = (int)HttpContext.Session.GetInt32("UserId");
                 User currentUser = userContext.GetUser(userid);
+                int highscore = scoreContext.GetUserHighscore(userid);
                 TempData["username"] = currentUser.Username;
+                TempData["highscore"] = highscore;
                 return View();
             }
             else
@@ -90,6 +92,65 @@ namespace SDD_ASG2.Controllers
                 TempData["UserNotLoggedIn"] = "Login is required";
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditPassword(IFormCollection formdata)
+        {
+            string currentPW = formdata["currentPW"].ToString();
+            string newPW = formdata["newPW"].ToString();
+            string cNewPW = formdata["cNewPW"].ToString();
+
+            // Get current user
+            int userid = (int)HttpContext.Session.GetInt32("UserId");
+            User currentUser = userContext.GetUser(userid);
+
+            // Validation for change of password
+            if (userContext.CheckPassword(currentUser.Email, currentPW))
+            {
+                if (newPW != cNewPW)
+                {
+                    TempData["cNewPWError"] = "Confirmation password is not the same as new password!";
+                }
+                else if (newPW.Length < 8)
+                {
+                    TempData["newPWError"] = "Minimum length of password is 8!";
+                }
+                else
+                {
+                    userContext.ChangePassword(userid, newPW);
+                }
+                            
+            }
+            else
+            {
+                TempData["oldPWError"] = "Current Password does not match!";
+            }
+
+            return RedirectToAction("Profile");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUsername(IFormCollection formdata)
+        {
+            string newUsername = formdata["newUsername"].ToString().Trim();
+
+            // Get current user
+            int userid = (int)HttpContext.Session.GetInt32("UserId");
+
+            // check if current username exist
+            if (!userContext.IsUsernameExist(newUsername) && newUsername != "")
+            {
+                userContext.ChangeUsername(userid, newUsername);
+            }
+            else
+            {
+                TempData["usernameError"] = "Username already exist!";
+            }
+
+            return RedirectToAction("Profile");
         }
 
     }

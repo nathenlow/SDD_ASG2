@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using SDD_ASG2.ViewModels;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace SDD_ASG2.DAL
 {
@@ -233,6 +234,31 @@ namespace SDD_ASG2.DAL
             //Close database connection
             conn.Close();
             return false;
+        }
+
+
+        public void ChangePassword(int userid, string newPassword)
+        {
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"UPDATE user SET password = @newpassword WHERE userid = @userid;";
+            cmd.Parameters.AddWithValue("@newpassword", newPassword);
+            cmd.Parameters.AddWithValue("@userid", userid);
+
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        public void ChangeUsername(int userid, string newUsername)
+        {
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"UPDATE user SET username = @newUsername WHERE userid = @userid;";
+            cmd.Parameters.AddWithValue("@newUsername", newUsername);
+            cmd.Parameters.AddWithValue("@userid", userid);
+
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
     }

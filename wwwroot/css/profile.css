@@ -1,0 +1,36 @@
+﻿#profile strong{
+    margin:2px;
+    font-size:18px;
+}
+
+#profile a {
+    background-color: mediumaquamarine;
+    color: white;
+    margin: 5px;
+    width: 60%;
+    height: 30px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+#profile a:hover{
+    background-color:aquamarine;
+    color:darkblue;
+    transition: 0.5s;
+}
+#profile a:hover span{
+    display:none;
+}
+
+#profile a:hover strong::after{
+    content: 'Edit';
+}
+
+#profile .inner-card {
+    box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+    width: 35vw;
+    min-height:fit-content;
+    height: 70vh;
+}
+
