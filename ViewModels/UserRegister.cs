@@ -73,70 +73,74 @@ namespace SDD_ASG2.ViewModels
             }
         }
 
-    }
-    public class ValidateEmailExists : ValidationAttribute
-    {
-        private UserDAL userContext = new UserDAL();
-        protected override ValidationResult IsValid(
-            object value, ValidationContext validationContext)
+        // Validation classes
+        private class ValidateEmailExists : ValidationAttribute
         {
-            // Get the email value to validate
-            string email = Convert.ToString(value);
-            if (userContext.IsEmailExist(email))
+            private UserDAL userContext = new UserDAL();
+            protected override ValidationResult IsValid(
+                object value, ValidationContext validationContext)
             {
-                // validation failed
-                return new ValidationResult("Email address already exists!");
-            }
-            else
-            {
-                // validation passed
-                return ValidationResult.Success;
-            }
+                // Get the email value to validate
+                string email = Convert.ToString(value);
+                if (userContext.IsEmailExist(email))
+                {
+                    // validation failed
+                    return new ValidationResult("Email address already exists!");
+                }
+                else
+                {
+                    // validation passed
+                    return ValidationResult.Success;
+                }
 
+            }
         }
-    }
 
-    public class ValidateUsernameExists : ValidationAttribute
-    {
-        private UserDAL userContext = new UserDAL();
-        protected override ValidationResult IsValid(
-            object value, ValidationContext validationContext)
+
+        private class ValidateUsernameExists : ValidationAttribute
         {
-            // Get the email value to validate
-            string username = Convert.ToString(value);
-            if (userContext.IsUsernameExist(username))
+            private UserDAL userContext = new UserDAL();
+            protected override ValidationResult IsValid(
+                object value, ValidationContext validationContext)
             {
-                // validation failed
-                return new ValidationResult("Username already exists!");
-            }
-            else
-            {
-                // validation passed
-                return ValidationResult.Success;
-            }
+                // Get the email value to validate
+                string username = Convert.ToString(value);
+                if (userContext.IsUsernameExist(username))
+                {
+                    // validation failed
+                    return new ValidationResult("Username already exists!");
+                }
+                else
+                {
+                    // validation passed
+                    return ValidationResult.Success;
+                }
 
+            }
         }
-    }
 
-    public class ValidatePassword : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(
-            object value, ValidationContext validationContext)
+        private class ValidatePassword : ValidationAttribute
         {
-            // Get the email value to validate
-            string password = Convert.ToString(value);
-            UserRegister user = (UserRegister)validationContext.ObjectInstance;
-            if (user.Password == password)
+            protected override ValidationResult IsValid(
+                object value, ValidationContext validationContext)
             {
-                // validation passed
-                return ValidationResult.Success;
-            }
-            else
-            {
-                // validation failed
-                return new ValidationResult("Password do not match!");
-            }
+                // Get the email value to validate
+                string password = Convert.ToString(value);
+                UserRegister user = (UserRegister)validationContext.ObjectInstance;
+                if (user.Password == password)
+                {
+                    // validation passed
+                    return ValidationResult.Success;
+                }
+                else
+                {
+                    // validation failed
+                    return new ValidationResult("Password do not match!");
+                }
 
+            }
         }
+
     }
+
 }
