@@ -59,7 +59,19 @@ namespace SDD_ASG2.Controllers
 
         public ActionResult Profile()
         {
-            return View();
+            string role = HttpContext.Session.GetString("Role");
+            if (role == "User")
+            {
+                int userid = (int)HttpContext.Session.GetInt32("UserId");
+                User currentUser = userContext.GetUser(userid);
+                TempData["username"] = currentUser.Username;
+                return View();
+            }
+            else
+            {
+                TempData["UserNotLoggedIn"] = "Login is required";
+                return RedirectToAction("Index", "Home");
+            }
         }
 
     }
