@@ -87,7 +87,15 @@
                                         switch (role)
                                         {
                                             case "User":
-                                                @await Html.PartialAsync("Navbar/_UserNav.cshtml")
+                                                string urlPath = Context.Request.Path;
+                                                if (urlPath.Contains("Game/Index"))
+                                                {
+                                                    @await Html.PartialAsync("Navbar/_GameNav.cshtml")
+                                                }
+                                                else
+                                                {
+                                                    @await Html.PartialAsync("Navbar/_UserNav.cshtml")
+                                                }
                                                 break;
                                             default:
                                                 @await Html.PartialAsync("Navbar/_HomeNav.cshtml")

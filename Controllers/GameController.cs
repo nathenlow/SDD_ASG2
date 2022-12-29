@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SDD_ASG2.DAL;
 using SDD_ASG2.Models;
+using SDD_ASG2.ViewModels;
 
 namespace SDD_ASG2.Controllers
 {
@@ -50,6 +52,22 @@ namespace SDD_ASG2.Controllers
             }
         }
 
+
+        [HttpPost]
+        public ActionResult SaveData(IFormCollection collection)
+        {
+            int userid = (int)HttpContext.Session.GetInt32("UserId");
+            userContext.SaveGameData(userid, collection["data"]);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Finish(IFormCollection collection)
+        {
+            int userid = (int)HttpContext.Session.GetInt32("UserId");
+            scoreContext.InsertScore(userid, int.Parse(collection["data"]));
+            return RedirectToAction("Index", "Home");
+        }
 
         public ActionResult Leaderboard()
         {

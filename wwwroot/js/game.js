@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    //--------------Prompt user before leaving page--------------//
+    window.onbeforeunload = function () {
+        return 'Are you sure you want to leave?';
+    };
+
     // Display game instructions
     displayGameInstructions();
 
@@ -13,11 +18,12 @@
     const rowname = "row";
     const choicename = "choice";
 
-    // Get JSONArray in string and convert it
+    // Get JSON obj from html
     var gamedatastr = document.querySelector("#game span#gamedata").innerHTML;
-    var gamedata = JSON.parse(gamedatastr);
-    // Init gamedata JSON array if empty
-    if (!$.isArray(gamedata) || !gamedata.length) {
+    var gamedata = {};
+
+    // Init gamedata JSON object if empty
+    if (gamedatastr == "{}") {
 
         // Create Json array
         gamedata = {
@@ -34,6 +40,8 @@
         }
 
         createChoices();
+    } else {
+        gamedata = JSON.parse(gamedatastr);
     }
 
     // Create Board
@@ -109,6 +117,12 @@
             if (gamedata["turn"] >= totalcells && coinsAvail() <= 0) {
                 // save score ==> send data to controller finish() (append to score, remove saved game data)
                 //show how many points he have and his position
+
+                /*let formData = new FormData();
+                formData.append("data", score);
+                let request = new XMLHttpRequest();
+                request.open("POST", "/Game/Finish");
+                request.send(formData);*/
             }
 
             if (redoturn == false) {
@@ -123,12 +137,21 @@
     }
 
 
-    //--------------Game Instructions--------------//
-    $(".game-instructions").click(function (e) {
+    //--------------on click functions--------------//
+    //Game Instructions
+    $(".game-instructions").click(function(e) {
         e.preventDefault();
         displayGameInstructions();
-    })
-    
+    });
+
+    //Save game
+    $("#savegame").click(function (e) {
+        e.preventDefault();
+        saveData();
+        document.querySelector(".nk-icon-close").click();
+
+    });
+
     //--------------FUNCTIONS--------------//
 
     // fill board with buildings
@@ -178,7 +201,7 @@
 
     // check if the position the user chose is acceptable
     function checkPos(pos) {
-        if (gamedata["turn"] == 0) {
+        if (gamedata["turn"] == 1) {
             return true;
         }
         else {
@@ -195,8 +218,11 @@
 
     // create form and post data
     function saveData() {
-        // save score ==> send data to controller savedata()
-
+        let formData = new FormData();
+        formData.append("data", JSON.stringify(gamedata));
+        let request = new XMLHttpRequest();
+        request.open("POST", "/Game/SaveData");
+        request.send(formData);
     }
 
     function createOnDrag() {

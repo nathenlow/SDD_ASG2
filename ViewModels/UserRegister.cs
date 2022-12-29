@@ -1,5 +1,4 @@
 ﻿using Google.Protobuf.WellKnownTypes;
-using MailKit.Net.Imap;
 using Org.BouncyCastle.Asn1.Crmf;
 using System;
 using System.Collections.Generic;
