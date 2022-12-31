@@ -24,7 +24,7 @@ namespace SDD_ASG2.DAL
             conn = new MySqlConnection(strConn);
         }
 
-        //get user through email
+        //get top 10 scores
         public List<Scores> GetHighscores()
         {
             List<Scores> scoreList = new List<Scores>();
@@ -72,7 +72,7 @@ namespace SDD_ASG2.DAL
         public int GetUserHighscore(int userid)
         {
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"Select * From scores WHERE userid = @userid;";
+            cmd.CommandText = @"SELECT s.score FROM scores s WHERE s.userid = @userid ORDER BY s.score DESC LIMIT 1;";
             cmd.Parameters.AddWithValue("@userid", userid);
             int highscore = 0;
 
@@ -82,13 +82,8 @@ namespace SDD_ASG2.DAL
             //read
             if (reader.HasRows)
             {
-                while (reader.Read())
-                {
-                    if(reader.GetInt32(1) > highscore) {
-                        highscore= reader.GetInt32(1);
-                    }
-
-                }
+                reader.Read();
+                highscore= reader.GetInt32(0);
             }
             conn.Close();
             return highscore;
