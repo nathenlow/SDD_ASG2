@@ -98,19 +98,18 @@
             // get cell position
             let position = parseInt(cellid.replace(cellname, ""));
 
-            console.log(choice);
-            console.log(position);
+            console.log(choice);  //to be removed
+            console.log(position); //to be removed
 
-            //show loading screen
+            let posOk = checkPos(position);
 
-            // define variables
-            let redoturn = false;
-
-            // check if position is suitable
-            if (checkPos(position)) {
+            //if position is suitable
+            if (posOk) {
                 // update gamedata (add building to layout, add usedCoin)
-
-
+                gamedata["layout"][position] = choice;
+                gamedata["coinUsed"]++;
+                gamedata["turn"]++;
+                placeBuilding(position);
             }
 
             // Redirect Game when user is completed
@@ -124,13 +123,11 @@
                 request.open("POST", "/Game/Finish");
                 request.send(formData);*/
             }
-
-            if (redoturn == false) {
-                gamedata["turn"]++;
-                fillBoard();
+            else if (posOk) {
                 createChoices();
                 displayChoices();
             }
+
         });
 
 
@@ -154,16 +151,21 @@
 
     //--------------FUNCTIONS--------------//
 
+    // place building in specific position
+    function placeBuilding(position) {
+        let cellid = cellname + position;
+        var element = document.querySelector(`#game .table tbody td#${cellid}`);
+        // add class if havent added
+        if (!element.classList.contains(gamedata["layout"][position])) {
+            element.classList.add(gamedata["layout"][position]);
+        }
+    }
+
     // fill board with buildings
     function fillBoard() {
         for (let i = 0; i < (totalcells); i++) {
             if (building.includes(gamedata["layout"][i])) {
-                let cellid = cellname + i;
-                var element = document.querySelector(`#game .table tbody td#${cellid}`);
-                // add class if havent added
-                if (!element.classList.contains(gamedata["layout"][i])) {
-                    element.classList.add(gamedata["layout"][i]);
-                }
+                placeBuilding(i);
             }
         }
     }
@@ -208,6 +210,7 @@
             // check for building on pos --> have = return false
             // check for buildings in North, South, East, West --> have = return true
 
+            return true; //to be removed
         }
     }
 
