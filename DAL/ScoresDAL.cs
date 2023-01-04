@@ -61,10 +61,53 @@ namespace SDD_ASG2.DAL
             cmd.CommandText = @"INSERT scores(score, userid) VALUES(@score, @userid);";
             cmd.Parameters.AddWithValue("@score", score);
             cmd.Parameters.AddWithValue("@userid", userid);
-            
+
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
+        }
+
+        public int CheckInLeaderboard(int userid)
+        {
+
+            MySqlCommand cmd1 = conn.CreateCommand();
+            cmd1.CommandText = @"SELECT s.id FROM  scores s ORDER BY s.score DESC, s.timestamp ASC LIMIT 0,10;";
+
+            MySqlCommand cmd2 = conn.CreateCommand();
+            cmd2.CommandText = @"SELECT s.id FROM  scores s WHERE s.userid = @userid ORDER BY s.timestamp DESC LIMIT 0,1;";
+            cmd2.Parameters.AddWithValue("@userid", userid);
+
+            conn.Open();
+            MySqlDataReader reader2 = cmd2.ExecuteReader();
+            if (reader2.HasRows)
+            {
+                reader2.Read();
+                int scoreid = reader2.GetInt32(0);
+                reader2.Close();
+
+                MySqlDataReader reader1 = cmd1.ExecuteReader();
+                if (reader1.HasRows)
+                {
+                    int count = 0;
+                    while (reader1.Read())
+                    {
+                        count++;
+                        reader1.GetInt32(0);
+
+                        if (reader1.GetInt32(0) == scoreid)
+                        {
+                            return count;
+                        }
+
+                    }
+
+                }
+                reader1.Close();
+            }
+
+            conn.Close();
+
+            return 0;
         }
 
 
