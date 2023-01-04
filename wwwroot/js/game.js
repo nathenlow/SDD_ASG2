@@ -242,7 +242,24 @@
     // calculate Total coins
     function calculateTotalCoin() {
         // will be used every turn or when needed ???
-
+        // not done just committing first
+        if (gamedata["layout"][position] == "Industry" || gamedata["layout"][position] == "Commercial") {
+            if (gamedata["layout"][position]) {
+                if (gamedata["layout"][position - 1] == "Residential") {
+                    totalCoin += 1
+                }
+                if (gamedata["layout"][position - 1] == "Residential") {
+                    totalCoin += 1
+                }
+                if (gamedata["layout"][position + boardRows] == "Residential") {
+                    totalCoin += 1
+                }
+                if (gamedata["layout"][position - boardRows] == "Residential") {
+                    totalCoin += 1 
+                }
+            }
+        }
+       
     }
 
     // Select 2 random buildings for user two choose from
