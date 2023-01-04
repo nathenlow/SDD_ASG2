@@ -114,7 +114,7 @@
                 gamedata["coinUsed"]++;
                 gamedata["turn"]++;
                 placeBuilding(position);
-                calculateScore(position, choice);
+                calculateScore();
                 $("#score").html(score);
             }
 
