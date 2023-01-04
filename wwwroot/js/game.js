@@ -18,10 +18,6 @@
     const rowname = "row";
     const choicename = "choice";
 
-    // Global variable
-    var score = 0;
-    var noIndustry = 0;
-
     // Get JSON obj from html
     var gamedatastr = document.querySelector("#game span#gamedata").innerHTML;
     var gamedata = {};
@@ -114,16 +110,16 @@
                 gamedata["coinUsed"]++;
                 gamedata["turn"]++;
                 placeBuilding(position);
-                calculateScore();
+                let score = calculateScore();
                 $("#score").html(score);
             }
 
             console.log(coinsAvail());
             // Redirect Game when user is completed
             if (gamedata["turn"] >= totalcells || coinsAvail() <= 0) {
-                // save score ==> send data to controller finish() (append to score, remove saved game data)
-                // show how many points he have and his position
+                // save score ==> send data to controller finish()
 
+                let score = calculateScore();
                 let formData = new FormData();
                 formData.append("data", score);
                 let request = new XMLHttpRequest();
@@ -133,8 +129,10 @@
                     window.onbeforeunload = null;
                     if (request.status == 200) {
                         // Success!
+                        // Redirect user to home
                         window.location.replace("/Home");
                     } else if (request.status == 201) {
+                        // Redirect user to leaderboard if top 10
                         window.location.replace("/Game/Leaderboard");
                     } else {
                         // Error!
@@ -155,7 +153,7 @@
 
     //--------------on click functions--------------//
     //Game Instructions
-    $(".game-instructions").click(function(e) {
+    $(".game-instructions").click(function (e) {
         e.preventDefault();
         displayGameInstructions();
     });
@@ -192,51 +190,76 @@
 
     // calculate current score
     function calculateScore() {
-        for (let i = 0; i < boardColumns * boardRows; i++) {
-            let neighborList = getNeighbor(i);
-            let choice = gamedata["layout"][0];
-            if (choice == "Residential") {
-                if (neighborlist.includes("Industry")) {
+        var score = 0;
+
+        for (let i = 0; i < (totalcells); i++) {
+            var neighborList = getNeighbor(i);
+            var neighborNameList = neighborNames(neighborList);
+            
+            switch (gamedata["layout"][i]) {
+                case "Residential":
+                    if (neighborNameList.includes("Industry")) {
+                        score += 1;
+                    }
+                    else {
+                        for (var index in neighborNameList) {
+                            let adjBuilding = neighborNameList[index];
+                            if (adjBuilding == "Residential" || adjBuilding == "Commercial") {
+                                score += 1;
+                            } else if (adjBuilding == "Park") {
+                                score += 2;
+                            }
+
+                        }
+                    }
+                    break;
+
+
+                case "Industry":
                     score += 1;
-                }
-                else {
-                    neighborlist.forEach(function (adjBuilding) {
-                        if (adjBuilding == "Residential" || adjBuilding == "Commercial") {
+                    break;
+
+
+                case "Commercial":
+                    for (var index in neighborNameList) {
+                        let adjBuilding = neighborNameList[index];
+                        if (adjBuilding == "Commercial") {
                             score += 1;
                         }
-                        else if (adjBuilding == "Park") {
-                            score += 2;
+                    }
+                    break;
+
+
+                case "Park":
+                    for (var index in neighborNameList) {
+                        let adjBuilding = neighborNameList[index];
+                        if (adjBuilding == "Park") {
+                            score += 1;
                         }
-                    })
-                }
-            }
-            // Industrial - requires global variable
-            //Incomplete - Not sure how to add the score based on number of industry exist in the entire board
-            else if (choice == "Industry") {
-                score += 1;
-            }
-            // Commercial
-            else if (choice == "Commercial") {
-                neighborList.forEach(function (adjBuilding) {
-                    if (adjBuilding == "Commercial") {
+                    }
+                    break;
+
+
+                case "Road":
+                    if (neighborList.includes(epos(i)) && gamedata["layout"][epos(i)]  == "Road") {
                         score += 1;
                     }
-                })
-            }
-            // Park
-            else if (choice == "Park") {
-                neighborList.forEach(function (adjBuilding) {
-                    if (adjBuilding == "Park") {
+                    if (neighborList.includes(wpos(i)) && gamedata["layout"][wpos(i)] == "Road") {
                         score += 1;
                     }
-                })
+                    break;
             }
-            // Road
-            //Incomplete - Don't know how to calculate score for road based on row only (because the nighborList check 4 sides of the building)
-            //else if (choice == "Road") {
-                //if (neighborList == 
-            }
+
         }
+        return score;
+    }
+
+    function neighborNames(neighborList) {
+        var neighborNameList = [];
+        for (var i in neighborList) {
+            neighborNameList.push(gamedata["layout"][neighborList[i]]);
+        }
+        return neighborNameList;
     }
 
     // calculate Total coins
@@ -255,11 +278,11 @@
                     totalCoin += 1
                 }
                 if (gamedata["layout"][position - boardRows] == "Residential") {
-                    totalCoin += 1 
+                    totalCoin += 1
                 }
             }
         }
-       
+
     }
 
     // Select 2 random buildings for user two choose from
@@ -295,7 +318,6 @@
 
             // check for neighbors --> have = return true
             let neighbourlist = getNeighbor(pos);
-            console.log(neighbourlist);
             for (var i in neighbourlist) {
                 if (building.includes(gamedata["layout"][neighbourlist[i]])) {
                     return true;
@@ -316,7 +338,7 @@
             return neighborList;
         }
         //top right corner
-        else if (pos == (boardColumns-1)) {
+        else if (pos == (boardColumns - 1)) {
             neighborList.push(wpos(pos));
             neighborList.push(spos(pos));
             return neighborList;
@@ -341,7 +363,7 @@
             return neighborList;
         }
         //bottom row
-        else if (pos >= (totalcells-boardColumns)) {
+        else if (pos >= (totalcells - boardColumns)) {
             neighborList.push(epos(pos));
             neighborList.push(npos(pos));
             neighborList.push(wpos(pos));
