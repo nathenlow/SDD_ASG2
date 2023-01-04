@@ -186,7 +186,7 @@
         }
     }
 
-    // calculate current score and coins generator
+    // calculate current score
     function calculateScore() {
         var score = 0;
 
@@ -211,14 +211,6 @@
                     }
                     break;
 
-                case "Residential":
-                    for (var index in neighborNameList) {
-                        let adjBuilding = neighborNameList[index];
-                        if (adjBuilding == "Industry" || adjBuilding == "Commercial") {
-                            gamedata["totalCoin"] += 1;
-                        }
-                    }
-                    break;
 
                 case "Industry":
                     score += 1;
@@ -278,6 +270,15 @@
                 for (var index in neighborNameList) {
                     let adjBuilding = neighborNameList[index];
                     if (adjBuilding == "Residential") {
+                        gamedata["totalCoin"] += 1;
+                    }
+                }
+                break;
+
+            case "Residential":
+                for (var index in neighborNameList) {
+                    let adjBuilding = neighborNameList[index];
+                    if (adjBuilding == "Industry" || adjBuilding == "Commercial") {
                         gamedata["totalCoin"] += 1;
                     }
                 }
