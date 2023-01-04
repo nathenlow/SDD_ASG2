@@ -61,6 +61,7 @@
     fillBoard();
     displayChoices();
     $("#score").html(calculateScore());
+    $("#totalCoin").html(coinsAvail());
 
     const cellgrp = document.querySelectorAll("#game .table tbody td");
     for (const cell of cellgrp) {
@@ -110,8 +111,12 @@
                 gamedata["layout"][position] = choice;
                 gamedata["coinUsed"]++;
                 gamedata["turn"]++;
+                gamedata["totalCoin"];
                 placeBuilding(position);
+                calculateTotalCoin(position);
                 $("#score").html(calculateScore());
+                $("#totalCoin").html(coinsAvail());
+                gamedata["totalCoin"];
             }
 
             console.log(coinsAvail());
@@ -263,26 +268,43 @@
     }
 
     // calculate Total coins
-    function calculateTotalCoin() {
+    function calculateTotalCoin(position) {
         // will be used every turn or when needed ???
         // not done just committing first
-        if (gamedata["layout"][position] == "Industry" || gamedata["layout"][position] == "Commercial") {
-            if (gamedata["layout"][position]) {
-                if (gamedata["layout"][position - 1] == "Residential") {
-                    totalCoin += 1
-                }
-                if (gamedata["layout"][position - 1] == "Residential") {
-                    totalCoin += 1
-                }
-                if (gamedata["layout"][position + boardRows] == "Residential") {
-                    totalCoin += 1
-                }
-                if (gamedata["layout"][position - boardRows] == "Residential") {
-                    totalCoin += 1
-                }
-            }
-        }
+        var neighborList = getNeighbor(position)
+        var neighborNameList = neighborNames(neighborList)
 
+        switch (gamedata["layout"][position]) {
+            case "Residential":
+                    for (var index in neighborNameList) {
+                        let adjBuilding = neighborNameList[index];
+                        if (adjBuilding == "Industry" || adjBuilding == "Commercial") {
+                            gamedata["totalCoin"] += 1;
+                        }
+                    }
+                break;
+
+
+            case "Industry":
+
+                for (var index in neighborNameList) {
+                    let adjBuilding = neighborNameList[index];
+                    if (adjBuilding == "Residential") {
+                        gamedata["totalCoin"] += 1;
+                    }
+                }
+                break;
+
+
+            case "Commercial":
+                for (var index in neighborNameList) {
+                    let adjBuilding = neighborNameList[index];
+                    if (adjBuilding == "Residential") {
+                        gamedata["totalCoin"] += 1;
+                    }
+                }
+                break;
+        }
     }
 
     // Select 2 random buildings for user two choose from
