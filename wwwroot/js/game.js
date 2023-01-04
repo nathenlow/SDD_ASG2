@@ -100,9 +100,6 @@
             // get cell position
             let position = parseInt(cellid.replace(cellname, ""));
 
-            console.log(choice);  //to be removed
-            console.log(position); //to be removed
-
             let posOk = checkPosition(position);
 
             //if position is suitable
@@ -111,15 +108,12 @@
                 gamedata["layout"][position] = choice;
                 gamedata["coinUsed"]++;
                 gamedata["turn"]++;
-                gamedata["totalCoin"];
                 placeBuilding(position);
                 calculateTotalCoin(position);
                 $("#score").html(calculateScore());
                 $("#totalCoin").html(coinsAvail());
-                gamedata["totalCoin"];
             }
-
-            console.log(coinsAvail());
+            
             // Redirect Game when user is completed
             if (gamedata["turn"] >= totalcells || coinsAvail() <= 0) {
                 // save score ==> send data to controller finish()
