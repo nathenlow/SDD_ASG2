@@ -101,7 +101,7 @@
             console.log(choice);  //to be removed
             console.log(position); //to be removed
 
-            let posOk = checkPos(position);
+            let posOk = checkPosition(position);
 
             //if position is suitable
             if (posOk) {
@@ -217,22 +217,123 @@
     }
 
     // check if the position the user chose is acceptable
-    function checkPos(pos) {
+    function checkPosition(pos) {
         if (gamedata["turn"] == 1) {
             return true;
         }
         else {
             // check for building on pos --> have = return false
-            // check for buildings in North, South, East, West --> have = return true
+            if (building.includes(gamedata["layout"][pos])) {
+                alert("This position is being used. Please try again.");
+                return false;
+            }
 
-            return true; //to be removed
+            // check for neighbors --> have = return true
+            let neighbourlist = getNeighbor(pos);
+            console.log(neighbourlist);
+            for (var i in neighbourlist) {
+                if (building.includes(gamedata["layout"][neighbourlist[i]])) {
+                    return true;
+                }
+            }
+            alert("You must build next to an existing building.");
+            return false;
         }
+    }
+
+    // return a list which contains the positions of neighbors
+    function getNeighbor(pos) {
+        let neighborList = [];
+        //top left corner
+        if (pos == 0) {
+            neighborList.push(epos(pos));
+            neighborList.push(spos(pos));
+            return neighborList;
+        }
+        //top right corner
+        else if (pos == (boardColumns-1)) {
+            neighborList.push(wpos(pos));
+            neighborList.push(spos(pos));
+            return neighborList;
+        }
+        //bottom left corner
+        else if (pos == (boardColumns - 1)) {
+            neighborList.push(epos(pos));
+            neighborList.push(npos(pos));
+            return neighborList;
+        }
+        //bottom right corner
+        else if (pos == (boardColumns - 1)) {
+            neighborList.push(wpos(pos));
+            neighborList.push(npos(pos));
+            return neighborList;
+        }
+        //top row
+        else if (pos < boardColumns) {
+            neighborList.push(epos(pos));
+            neighborList.push(spos(pos));
+            neighborList.push(wpos(pos));
+            return neighborList;
+        }
+        //bottom row
+        else if (pos >= (totalcells-boardColumns)) {
+            neighborList.push(epos(pos));
+            neighborList.push(npos(pos));
+            neighborList.push(wpos(pos));
+            return neighborList;
+        }
+        //left column
+        else if ((pos % boardColumns) == 0) {
+            neighborList.push(npos(pos));
+            neighborList.push(epos(pos));
+            neighborList.push(spos(pos));
+            return neighborList;
+        }
+        //right column
+        else if ((pos % boardColumns) == (boardColumns - 1)) {
+            neighborList.push(npos(pos));
+            neighborList.push(wpos(pos));
+            neighborList.push(spos(pos));
+            return neighborList;
+        }
+        //default
+        else {
+            neighborList.push(npos(pos));
+            neighborList.push(epos(pos));
+            neighborList.push(spos(pos));
+            neighborList.push(wpos(pos));
+            return neighborList;
+        }
+
+    }
+
+    /*----------------START--------------------
+    -----Simple functions for getNeighbor()--*/
+    // The character before 'pos' stands for north, south, east and west of a position
+    // e.g npos => north of position
+
+    function npos(pos) {
+        return (pos - boardColumns);
+    }
+
+    function spos(pos) {
+        return (pos + boardColumns);
+    }
+
+    function epos(pos) {
+        return (pos + 1);
+    }
+
+    function wpos(pos) {
+        return (pos - 1);
     }
 
     function coinsAvail() {
         let availcoins = gamedata["totalCoin"] - gamedata["coinUsed"];
         return availcoins;
     }
+    /*----------------END--------------------
+    -----Simple functions for getNeighbor()--*/
 
     // create form and post data
     function saveData() {
