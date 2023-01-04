@@ -60,6 +60,7 @@
     // Display data
     fillBoard();
     displayChoices();
+    $("#score").html(calculateScore());
 
     const cellgrp = document.querySelectorAll("#game .table tbody td");
     for (const cell of cellgrp) {
@@ -110,8 +111,7 @@
                 gamedata["coinUsed"]++;
                 gamedata["turn"]++;
                 placeBuilding(position);
-                let score = calculateScore();
-                $("#score").html(score);
+                $("#score").html(calculateScore());
             }
 
             console.log(coinsAvail());
