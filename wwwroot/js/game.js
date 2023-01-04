@@ -269,16 +269,7 @@
         var neighborNameList = neighborNames(neighborList)
 
         switch (gamedata["layout"][position]) {
-            case "Residential":
-                    for (var index in neighborNameList) {
-                        let adjBuilding = neighborNameList[index];
-                        if (adjBuilding == "Industry" || adjBuilding == "Commercial") {
-                            gamedata["totalCoin"] += 1;
-                        }
-                    }
-                break;
-
-
+            
             case "Industry":
 
                 for (var index in neighborNameList) {
