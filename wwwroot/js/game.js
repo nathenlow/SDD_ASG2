@@ -18,6 +18,10 @@
     const rowname = "row";
     const choicename = "choice";
 
+    // Global variable
+    var score = 0;
+    var noIndustry = 0;
+
     // Get JSON obj from html
     var gamedatastr = document.querySelector("#game span#gamedata").innerHTML;
     var gamedata = {};
@@ -110,6 +114,7 @@
                 gamedata["coinUsed"]++;
                 gamedata["turn"]++;
                 placeBuilding(position);
+                calculateScore(position, choice);
             }
 
             console.log(coinsAvail());
@@ -117,8 +122,6 @@
             if (gamedata["turn"] >= totalcells || coinsAvail() <= 0) {
                 // save score ==> send data to controller finish() (append to score, remove saved game data)
                 // show how many points he have and his position
-
-                let score = calculateScore();
 
                 let formData = new FormData();
                 formData.append("data", score);
@@ -187,8 +190,32 @@
 
 
     // calculate current score
-    function calculateScore() {
-        // will be used every turn or when needed ???
+    function calculateScore(position, choice) {
+
+        // Get string position
+        let stringPosition = getStringPosition(position);
+
+	    // Residential
+        if (choice == "Residential") {
+            // check position
+        }
+        // Industrial - requires global variable
+        else if (choice == "Industrial") {
+
+        }
+        // Commercial
+        else if (choice == "Commercial") {
+
+        }
+        // Park
+        else if (choice == "Park") {
+
+        }
+        // Road
+        else {
+
+        }
+
     }
 
     // calculate Total coins
@@ -365,6 +392,42 @@
     function HighlightArea(id, isTrue) {
         isTrue == true ? document.getElementById(id).style.backgroundColor = "dodgerblue" :
             document.getElementById(id).style.backgroundColor = "";
+    }
+
+    // Get string position of cell
+    function getStringPosition(cellid) {
+        const top = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+        const bottom = [381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398];
+
+        // check if cell id is top left corner
+        if (cellid == 0) {
+            return "topLeft";
+        }
+        else if (cellid == 19) {
+            return "topRight";
+        }
+        else if (cellid == 380) {
+            return "bottomLeft";
+        }
+        else if (cellid == 399) {
+            return "bottomRight";
+        }
+        else if (cellid % boardColumns == 0) {
+            return "right";
+        }
+        else if (cellid % boardColumns == 19) {
+            return "left";
+        }
+        else if (top.include(cellid)) {
+            return "top";
+        }
+        else if (bottom.include(cellid)) {
+            return "bottom";
+        }
+        else {
+            return "mid";
+        }
+
     }
 
     // display game instruction modal
