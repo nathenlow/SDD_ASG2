@@ -260,8 +260,8 @@
     function calculateTotalCoin(position) {
         // will be used every turn or when needed ???
         // not done just committing first
-        var neighborList = getNeighbor(position)
-        var neighborNameList = neighborNames(neighborList)
+        var neighborList = getNeighbor(position);
+        var neighborNameList = neighborNames(neighborList);
 
         switch (gamedata["layout"][position]) {
             
