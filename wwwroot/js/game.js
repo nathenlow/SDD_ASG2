@@ -192,7 +192,6 @@
         }
     }
 
-
     // calculate current score
     function calculateScore() {
         var score = 0;
@@ -214,16 +213,13 @@
                             } else if (adjBuilding == "Park") {
                                 score += 2;
                             }
-
                         }
                     }
                     break;
 
-
                 case "Industry":
                     score += 1;
                     break;
-
 
                 case "Commercial":
                     for (var index in neighborNameList) {
@@ -234,7 +230,6 @@
                     }
                     break;
 
-
                 case "Park":
                     for (var index in neighborNameList) {
                         let adjBuilding = neighborNameList[index];
@@ -243,7 +238,6 @@
                         }
                     }
                     break;
-
 
                 case "Road":
                     if (neighborList.includes(epos(i)) && gamedata["layout"][epos(i)]  == "Road") {
@@ -254,11 +248,11 @@
                     }
                     break;
             }
-
         }
         return score;
     }
 
+    // convert neighboring positions to neighboring buildings names
     function neighborNames(neighborList) {
         var neighborNameList = [];
         for (var i in neighborList) {
