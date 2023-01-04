@@ -186,7 +186,7 @@
         }
     }
 
-    // calculate current score
+    // calculate current score and coins generator
     function calculateScore() {
         var score = 0;
 
@@ -207,6 +207,15 @@
                             } else if (adjBuilding == "Park") {
                                 score += 2;
                             }
+                        }
+                    }
+                    break;
+
+                case "Residential":
+                    for (var index in neighborNameList) {
+                        let adjBuilding = neighborNameList[index];
+                        if (adjBuilding == "Industry" || adjBuilding == "Commercial") {
+                            gamedata["totalCoin"] += 1;
                         }
                     }
                     break;
