@@ -115,6 +115,7 @@
                 gamedata["turn"]++;
                 placeBuilding(position);
                 calculateScore(position, choice);
+                $("#score").html(score);
             }
 
             console.log(coinsAvail());
@@ -190,32 +191,52 @@
 
 
     // calculate current score
-    function calculateScore(position, choice) {
-
-        // Get neighbors
-        let neighborlist = getNeighbor(position);
-
-	    // Residential
-        if (choice == "Residential") {
-            // check position
+    function calculateScore() {
+        for (let i = 0; i < boardColumns * boardRows; i++) {
+            let neighborList = getNeighbor(i);
+            let choice = gamedata["layout"][0];
+            if (choice == "Residential") {
+                if (neighborlist.includes("Industry")) {
+                    score += 1;
+                }
+                else {
+                    neighborlist.forEach(function (adjBuilding) {
+                        if (adjBuilding == "Residential" || adjBuilding == "Commercial") {
+                            score += 1;
+                        }
+                        else if (adjBuilding == "Park") {
+                            score += 2;
+                        }
+                    })
+                }
+            }
+            // Industrial - requires global variable
+            //Incomplete - Not sure how to add the score based on number of industry exist in the entire board
+            else if (choice == "Industry") {
+                score += 1;
+            }
+            // Commercial
+            else if (choice == "Commercial") {
+                neighborList.forEach(function (adjBuilding) {
+                    if (adjBuilding == "Commercial") {
+                        score += 1;
+                    }
+                })
+            }
+            // Park
+            else if (choice == "Park") {
+                neighborList.forEach(function (adjBuilding) {
+                    if (adjBuilding == "Park") {
+                        score += 1;
+                    }
+                })
+            }
+            // Road
+            //Incomplete - Don't know how to calculate score for road based on row only (because the nighborList check 4 sides of the building)
+            //else if (choice == "Road") {
+                //if (neighborList == 
+            }
         }
-        // Industrial - requires global variable
-        else if (choice == "Industrial") {
-
-        }
-        // Commercial
-        else if (choice == "Commercial") {
-
-        }
-        // Park
-        else if (choice == "Park") {
-
-        }
-        // Road
-        else {
-
-        }
-
     }
 
     // calculate Total coins
