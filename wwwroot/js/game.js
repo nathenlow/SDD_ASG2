@@ -112,16 +112,31 @@
                 placeBuilding(position);
             }
 
+            console.log(coinsAvail());
             // Redirect Game when user is completed
-            if (gamedata["turn"] >= totalcells && coinsAvail() <= 0) {
+            if (gamedata["turn"] >= totalcells || coinsAvail() <= 0) {
                 // save score ==> send data to controller finish() (append to score, remove saved game data)
-                //show how many points he have and his position
+                // show how many points he have and his position
 
-                /*let formData = new FormData();
+                let score = calculateScore();
+
+                let formData = new FormData();
                 formData.append("data", score);
                 let request = new XMLHttpRequest();
                 request.open("POST", "/Game/Finish");
-                request.send(formData);*/
+                request.send(formData);
+                request.onload = function () {
+                    window.onbeforeunload = null;
+                    if (request.status == 200) {
+                        // Success!
+                        window.location.replace("/Home");
+                    } else if (request.status == 201) {
+                        window.location.replace("/Game/Leaderboard");
+                    } else {
+                        // Error!
+                        alert("Error. Something is wrong with the server! Try again later.");
+                    }
+                };
             }
             else if (posOk) {
                 createChoices();
@@ -226,6 +241,15 @@
         let request = new XMLHttpRequest();
         request.open("POST", "/Game/SaveData");
         request.send(formData);
+        request.onload = function () {
+            if (request.status >= 200 && request.status < 300) {
+                // Success!
+                alert("Game is successfully saved");
+            } else {
+                // Error!
+                alert("Error. Something is wrong with the server! Try again later.");
+            }
+        };
     }
 
     function createOnDrag() {
