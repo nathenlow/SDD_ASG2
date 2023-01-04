@@ -336,6 +336,7 @@
 
     /*----------------START--------------------
     -----Simple functions for getNeighbor()--*/
+
     // The character before 'pos' stands for north, south, east and west of a position
     // e.g npos => north of position
 
@@ -355,12 +356,13 @@
         return (pos - 1);
     }
 
+    /*----------------END--------------------
+    -----Simple functions for getNeighbor()--*/
+
     function coinsAvail() {
         let availcoins = gamedata["totalCoin"] - gamedata["coinUsed"];
         return availcoins;
     }
-    /*----------------END--------------------
-    -----Simple functions for getNeighbor()--*/
 
     // create form and post data
     function saveData() {
