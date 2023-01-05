@@ -54,10 +54,14 @@ namespace SDD_ASG2.Controllers
                 GoogleJsonWebSignature.ValidateAsync(idToken);
                 string userName = currentUser.Name;
                 string eMail = currentUser.Email;
+                int userid;
                 // check if user email exist in database
                 if (userContext.IsEmailExist(eMail))
                 {
-                    return RedirectToAction("GoogleLogin");
+                    userid = userContext.GetUserId(eMail);
+                    HttpContext.Session.SetInt32("UserId", userid);
+                    HttpContext.Session.SetString("Role", "User");
+                    return RedirectToAction("Index", "Home");
                 }
 
                 if (userContext.IsUsernameExist(userName))
@@ -68,56 +72,12 @@ namespace SDD_ASG2.Controllers
                 {
                     userContext.SSORegister(eMail, userName);
                 }
-                
-                
-                int userid = userContext.GetUserId(eMail);
+
+                userid = userContext.GetUserId(eMail);
                 HttpContext.Session.SetInt32("UserId", userid);
                 HttpContext.Session.SetString("Role", "User");
                 return RedirectToAction("Index", "Home");
                 
-            }
-            catch (Exception e)
-            {
-                // Token ID is may be tempered with, force user to logout
-                return RedirectToAction("Index", "Logout");
-            }
-
-
-        }
-
-        [Authorize]
-        public async Task<ActionResult> GoogleLogin()
-        {
-            // The user is already authenticated, so this call won't
-            // trigger login, but it allows us to access token related values.
-            AuthenticateResult auth = await HttpContext.AuthenticateAsync();
-            string idToken = auth.Properties.GetTokenValue(
-            OpenIdConnectParameterNames.IdToken);
-            try
-            {
-                // Verify the current user logging in with Google server
-                // if the ID is invalid, an exception is thrown
-                Payload currentUser = await
-                GoogleJsonWebSignature.ValidateAsync(idToken);
-                string userName = currentUser.Name;
-                string eMail = currentUser.Email;
-
-                string email = eMail.Trim().ToLower();
-                string password = "";
-                if (password == ""  && userContext.CheckPassword(email, password))
-                {
-                    int userid = userContext.GetUserId(email);
-                    HttpContext.Session.SetInt32("UserId", userid);
-                    HttpContext.Session.SetString("Role", "User");
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    // Store an error message in TempData for display at the login page
-                    TempData["ErrorMsg"] = "Invalid Login Credentials!";
-                    return View();
-                }
-
             }
             catch (Exception e)
             {
