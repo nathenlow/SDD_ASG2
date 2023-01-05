@@ -138,6 +138,33 @@ namespace SDD_ASG2.DAL
             conn.Close();
         }
 
+        public void SSORegister(string email, string username=null)
+        {
+            //Create a SqlCommand object from connection object
+            MySqlCommand cmd = conn.CreateCommand();
+            //Specify an INSERT SQL statement which will
+            //return the auto-generated StaffID after insertion
+            if (username != null)
+            {
+                cmd.CommandText = @"INSERT INTO user (email, password, username) VALUES(@email, @password, @username)";
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@password", "");
+                cmd.Parameters.AddWithValue("@username", username);
+            }
+            else
+            {
+                cmd.CommandText = @"INSERT INTO user (email, password) VALUES(@email, @password)";
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@password", "");
+            }
+
+            //A connection to database must be opened before any operations made.
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            //A connection should be closed after operations.
+            conn.Close();
+        }
+
         public bool IsEmailExist(string email, int userid =0)
         {
             bool emailFound = false;

@@ -54,15 +54,23 @@ namespace SDD_ASG2.Controllers
                 GoogleJsonWebSignature.ValidateAsync(idToken);
                 string userName = currentUser.Name;
                 string eMail = currentUser.Email;
+                // check if user email exist in database
+                if (userContext.IsEmailExist(eMail))
+                {
+                    return RedirectToAction("GoogleLogin");
+                }
+
+                if (userContext.IsUsernameExist(userName))
+                {
+                    userContext.SSORegister(eMail);
+                }
+                else
+                {
+                    userContext.SSORegister(eMail, userName);
+                }
                 
-                UserRegister user = new UserRegister();
-
-                user.Username = userName;
-                user.Email = eMail;
-                user.Password = "123";
-
-                userContext.Register(user);
-                int userid = userContext.GetUserId(user.Email);
+                
+                int userid = userContext.GetUserId(eMail);
                 HttpContext.Session.SetInt32("UserId", userid);
                 HttpContext.Session.SetString("Role", "User");
                 return RedirectToAction("Index", "Home");
@@ -71,7 +79,7 @@ namespace SDD_ASG2.Controllers
             catch (Exception e)
             {
                 // Token ID is may be tempered with, force user to logout
-                return RedirectToAction("LogOut");
+                return RedirectToAction("Index", "Logout");
             }
 
 
@@ -114,23 +122,11 @@ namespace SDD_ASG2.Controllers
             catch (Exception e)
             {
                 // Token ID is may be tempered with, force user to logout
-                return RedirectToAction("LogOut");
+                return RedirectToAction("Index", "Logout");
             }
 
 
         }
-
-        public async Task<ActionResult> LogOut()
-        {
-            // Clear authentication cookie
-            await HttpContext.SignOutAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme);
-            // Clear all key-value pairs stored in session state
-            HttpContext.Session.Clear();
-            // Go back to Home Page
-            return RedirectToAction("Register", "Home");
-        }
-
 
         public ActionResult Register()
         {

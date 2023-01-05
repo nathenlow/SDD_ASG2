@@ -10,7 +10,7 @@ CREATE TABLE user (
   userid int(11) NOT NULL AUTO_INCREMENT,
   email varchar(320) NOT NULL,
   password varchar(128) NOT NULL,
-  username varchar(50) NOT NULL,
+  username varchar(50) NOT NULL DEFAULT LEFT(UUID(), 20),
   savedgamedata mediumtext NOT NULL DEFAULT '{}' COMMENT 'JSON array',
   PRIMARY KEY (userid),
   UNIQUE(email),
@@ -30,6 +30,18 @@ CREATE TABLE scores (
 ENGINE = INNODB;
 
 /*--------------------------------------
+              CREATE TRIGGER
+--------------------------------------*/
+
+CREATE TRIGGER trigDeleteSavedGameGata
+AFTER INSERT
+  ON scores
+  FOR EACH ROW
+BEGIN
+  UPDATE user u SET savedgamedata = DEFAULT(u.savedgamedata) WHERE userid = NEW.userid;
+END;
+
+/*--------------------------------------
               CREATE VIEW
 --------------------------------------*/
 
@@ -42,7 +54,6 @@ CREATE VIEW highscore
     ORDER BY s.score DESC, s.timestamp ASC 
     LIMIT 0,10
 ;
-
 
 
 /*--------------------------------------
@@ -64,3 +75,4 @@ INSERT INTO scores (score, userid) VALUES
 (2, 3),
 (7, 4),
 (11, 5);
+
