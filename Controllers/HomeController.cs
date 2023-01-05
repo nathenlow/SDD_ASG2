@@ -1,4 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Google.Apis.Auth;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SDD_ASG2.DAL;
 using SDD_ASG2.Models;
@@ -27,6 +35,100 @@ namespace SDD_ASG2.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        //google sign in
+        [Authorize]
+        public async Task<ActionResult> GoogleRegister()
+        {
+            // The user is already authenticated, so this call won't
+            // trigger login, but it allows us to access token related values.
+            AuthenticateResult auth = await HttpContext.AuthenticateAsync();
+            string idToken = auth.Properties.GetTokenValue(
+            OpenIdConnectParameterNames.IdToken);
+            try
+            {
+                // Verify the current user logging in with Google server
+                // if the ID is invalid, an exception is thrown
+                Payload currentUser = await
+                GoogleJsonWebSignature.ValidateAsync(idToken);
+                string userName = currentUser.Name;
+                string eMail = currentUser.Email;
+                
+                UserRegister user = new UserRegister();
+
+                user.Username = userName;
+                user.Email = eMail;
+                user.Password = "123";
+
+                userContext.Register(user);
+                int userid = userContext.GetUserId(user.Email);
+                HttpContext.Session.SetInt32("UserId", userid);
+                HttpContext.Session.SetString("Role", "User");
+                return RedirectToAction("Index", "Home");
+                
+            }
+            catch (Exception e)
+            {
+                // Token ID is may be tempered with, force user to logout
+                return RedirectToAction("LogOut");
+            }
+
+
+        }
+
+        [Authorize]
+        public async Task<ActionResult> GoogleLogin()
+        {
+            // The user is already authenticated, so this call won't
+            // trigger login, but it allows us to access token related values.
+            AuthenticateResult auth = await HttpContext.AuthenticateAsync();
+            string idToken = auth.Properties.GetTokenValue(
+            OpenIdConnectParameterNames.IdToken);
+            try
+            {
+                // Verify the current user logging in with Google server
+                // if the ID is invalid, an exception is thrown
+                Payload currentUser = await
+                GoogleJsonWebSignature.ValidateAsync(idToken);
+                string userName = currentUser.Name;
+                string eMail = currentUser.Email;
+
+                string email = eMail.Trim().ToLower();
+                string password = "";
+                if (password == ""  && userContext.CheckPassword(email, password))
+                {
+                    int userid = userContext.GetUserId(email);
+                    HttpContext.Session.SetInt32("UserId", userid);
+                    HttpContext.Session.SetString("Role", "User");
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    // Store an error message in TempData for display at the login page
+                    TempData["ErrorMsg"] = "Invalid Login Credentials!";
+                    return View();
+                }
+
+            }
+            catch (Exception e)
+            {
+                // Token ID is may be tempered with, force user to logout
+                return RedirectToAction("LogOut");
+            }
+
+
+        }
+
+        public async Task<ActionResult> LogOut()
+        {
+            // Clear authentication cookie
+            await HttpContext.SignOutAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme);
+            // Clear all key-value pairs stored in session state
+            HttpContext.Session.Clear();
+            // Go back to Home Page
+            return RedirectToAction("Register", "Home");
         }
 
 
