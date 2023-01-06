@@ -6,7 +6,10 @@
 <span style="display: none" id="gamedata">@Html.Raw(ViewData["SavedGameData"])</span>
 @section scripts {
     <script type="text/javascript" src="~/js/game.js"></script>
+
 }
+
+    <audio src="~/mp3 file/gaming music.mp3" id="music" loop="loop"></audio>
     <!--Game Instruction Modal Start-->
     <div class="modal fade pulse animated" id="instruction-modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">

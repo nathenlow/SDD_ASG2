@@ -4,6 +4,11 @@
         return 'Are you sure you want to leave?';
     };
 
+    //game music in the background
+
+    PlayMusic();
+   
+        
     // Display game instructions
     displayGameInstructions();
 
@@ -487,6 +492,11 @@
     // display game instruction modal
     function displayGameInstructions() {
         $("#instruction-modal").modal("show");
+    }
+
+    function PlayMusic() {
+        var music = document.getElementById("music");
+        music.play();
     }
 
 })
