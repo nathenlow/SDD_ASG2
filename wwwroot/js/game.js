@@ -23,8 +23,6 @@
     const rowname = "row";
     const choicename = "choice";
 
-    var noIndustryPlaced = 0;
-
     // Get JSON obj from html
     var gamedatastr = document.querySelector("#game span#gamedata").innerHTML;
     var gamedata = {};
@@ -119,7 +117,6 @@
                 calculateTotalCoin(position);
                 $("#score").html(calculateScore());
                 $("#totalCoin").html(coinsAvail());
-                noIndustryPlaced += isIndustry(choice);
             }
             
             // Redirect Game when user is completed
@@ -222,10 +219,7 @@
 
 
                 case "Industry":
-                    noIndustry += 1;
-                    if (noIndustry => noIndustryPlaced) {
-                        score += ((noIndustry ** 2) - ((noIndustry - 1) ** 2));
-                    }                    
+                    score += 1;
                     break;
 
                 case "Commercial":
