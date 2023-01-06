@@ -49,13 +49,24 @@ namespace SDD_ASG2
             .AddCookie()
             .AddGoogleOpenIdConnect(options =>
             {
-    // Credentials (stored in appsettings.json) to identify
-    // the web app when performing Google authentication
-    options.ClientId =
-    Configuration["Authentication:Google:ClientId"];
+                // Credentials (stored in appsettings.json) to identify
+                // the web app when performing Google authentication
+                options.ClientId =
+                Configuration["Authentication:Google:ClientId"];
                 options.ClientSecret =
     Configuration["Authentication:Google:ClientSecret"];
+            })
+
+            .AddFacebook(options =>
+            {
+                options.AppId = "750737526441493";
+                options.AppSecret = "6b68f943c59d1d38478231ad425d8ecf";
             });
+            
+
+            
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

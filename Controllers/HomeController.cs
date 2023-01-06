@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Http;
 using SDD_ASG2.ViewModels;
-
 namespace SDD_ASG2.Controllers
 {
     public class HomeController : Controller
@@ -52,6 +51,7 @@ namespace SDD_ASG2.Controllers
                 // if the ID is invalid, an exception is thrown
                 Payload currentUser = await
                 GoogleJsonWebSignature.ValidateAsync(idToken);
+                
                 string userName = currentUser.Name;
                 string eMail = currentUser.Email;
                 int userid;
@@ -167,6 +167,10 @@ namespace SDD_ASG2.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+     
+
+
 
     }
 }
