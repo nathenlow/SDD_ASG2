@@ -194,7 +194,6 @@
     // calculate current score
     function calculateScore() {
         var score = 0;
-        var noIndustry = 0;
 
         for (let i = 0; i < (totalcells); i++) {
             var neighborList = getNeighbor(i);
