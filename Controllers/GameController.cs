@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using SDD_ASG2.DAL;
 using SDD_ASG2.Models;
 using SDD_ASG2.ViewModels;
+using System.Text.RegularExpressions;
 
 namespace SDD_ASG2.Controllers
 {
@@ -126,9 +127,9 @@ namespace SDD_ASG2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditPassword(IFormCollection formdata)
         {
-            string currentPW = formdata["currentPW"].ToString();
-            string newPW = formdata["newPW"].ToString();
-            string cNewPW = formdata["cNewPW"].ToString();
+            string currentPW = formdata["currentPW"].ToString().Trim();
+            string newPW = formdata["newPW"].ToString().Trim();
+            string cNewPW = formdata["cNewPW"].ToString().Trim();
 
             // Get current user
             int userid = (int)HttpContext.Session.GetInt32("UserId");
@@ -137,13 +138,13 @@ namespace SDD_ASG2.Controllers
             // Validation for change of password
             if (userContext.CheckPassword(currentUser.Email, currentPW))
             {
-                if (newPW != cNewPW)
+	            if (newPW != cNewPW)
                 {
                     TempData["cNewPWError"] = "Confirmation password is not the same as new password!";
                 }
-                else if (newPW.Length < 8)
+                else if (!Regex.Match(newPW, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z/\\d]{8,}$", RegexOptions.IgnoreCase).Success && newPW.Length < 128)
                 {
-                    TempData["newPWError"] = "Minimum length of password is 8!";
+                    TempData["newPWError"] = "Password must have minimum eight characters, at least one uppercase letter, one lowercase letter and one number";
                 }
                 else
                 {
