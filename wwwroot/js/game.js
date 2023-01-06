@@ -23,6 +23,8 @@
     const rowname = "row";
     const choicename = "choice";
 
+    var noIndustryPlaced = 0;
+
     // Get JSON obj from html
     var gamedatastr = document.querySelector("#game span#gamedata").innerHTML;
     var gamedata = {};
@@ -117,6 +119,7 @@
                 calculateTotalCoin(position);
                 $("#score").html(calculateScore());
                 $("#totalCoin").html(coinsAvail());
+                noIndustryPlaced += isIndustry(choice);
             }
             
             // Redirect Game when user is completed
@@ -194,6 +197,7 @@
     // calculate current score
     function calculateScore() {
         var score = 0;
+        var noIndustry = 0;
 
         for (let i = 0; i < (totalcells); i++) {
             var neighborList = getNeighbor(i);
@@ -218,7 +222,10 @@
 
 
                 case "Industry":
-                    score += 1;
+                    noIndustry += 1;
+                    if (noIndustry => noIndustryPlaced) {
+                        score += ((noIndustry ** 2) - ((noIndustry - 1) ** 2));
+                    }                    
                     break;
 
                 case "Commercial":
@@ -404,6 +411,16 @@
             return neighborList;
         }
 
+    }
+
+    // check if building placed is industry
+    function isIndustry(choice) {
+        if (choice == "Industry") {
+            return 2;
+        }
+        else {
+            return 0;
+        }
     }
 
     /*----------------START--------------------
