@@ -240,13 +240,9 @@
                     break;
 
                 case "Road":
-                    if (neighborList.includes(epos(i)) && gamedata["layout"][epos(i)]  == "Road") {
+                    if ((neighborList.includes(epos(i)) && gamedata["layout"][epos(i)] == "Road")||(neighborList.includes(wpos(i)) && gamedata["layout"][wpos(i)] == "Road")) {
                         score += 1;
                     }
-                    if (neighborList.includes(wpos(i)) && gamedata["layout"][wpos(i)] == "Road") {
-                        score += 1;
-                    }
-                    break;
             }
         }
         return score;
